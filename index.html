@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IQ2GQ Betting Model Picker</title>
+  <title>IQ2GQ Model Finder</title>
+
   <style>
     :root {
       --bg: #07111f;
       --card: #101c2c;
       --card2: #162337;
       --gold: #fbbf24;
-      --green: #22c55e;
-      --red: #ef4444;
       --text: #f9fafb;
       --muted: #cbd5e1;
       --line: #334155;
+      --green: #22c55e;
+      --red: #ef4444;
     }
 
     * { box-sizing: border-box; }
@@ -25,39 +26,74 @@
       background: radial-gradient(circle at top, #10233d, var(--bg));
       color: var(--text);
       min-height: 100vh;
-      padding: 24px;
+      padding: 22px;
     }
 
-    .wrap { max-width: 950px; margin: 0 auto; }
-
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 26px;
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
     }
-
-    .logo {
-      width: 72px;
-      height: 72px;
-      border: 2px solid var(--gold);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: var(--gold);
-      font-weight: 900;
-      font-size: 24px;
-    }
-
-    h1 { margin: 0; font-size: 34px; }
-    .subtitle { margin: 6px 0 0; color: var(--muted); }
 
     .card {
       background: linear-gradient(180deg, var(--card), var(--card2));
       border: 1px solid var(--line);
-      border-radius: 22px;
+      border-radius: 26px;
       padding: 28px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+    }
+
+    .centre { text-align: center; }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 42px;
+      color: var(--gold);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: var(--gold);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.5;
+      max-width: 720px;
+      margin: 12px auto 24px;
+    }
+
+    .rule {
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 10px 14px;
+      border-radius: 999px;
+      display: inline-block;
+      font-weight: 900;
+      margin: 12px 0 24px;
+    }
+
+    .bar {
+      width: 100%;
+      height: 12px;
+      background: #0f172a;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin: 12px 0 28px;
+    }
+
+    .fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), #fde68a);
+      transition: width 0.25s ease;
     }
 
     .progress-top {
@@ -65,37 +101,12 @@
       justify-content: space-between;
       color: var(--muted);
       font-size: 14px;
-      margin-bottom: 12px;
-    }
-
-    .bar, .mini-bar, .rank-bar {
-      background: #0f172a;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-    }
-
-    .bar { height: 12px; margin-bottom: 28px; }
-    .fill, .mini-fill, .rank-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold), #fde68a);
-    }
-
-    .tag {
-      display: inline-block;
-      color: var(--gold);
-      border: 1px solid var(--gold);
-      border-radius: 999px;
-      padding: 7px 13px;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 18px;
     }
 
     .question {
-      font-size: 30px;
+      font-size: 32px;
       font-weight: 900;
-      margin-bottom: 14px;
+      margin: 10px 0 16px;
       line-height: 1.15;
     }
 
@@ -103,8 +114,7 @@
       color: var(--muted);
       line-height: 1.6;
       font-size: 17px;
-      max-width: 760px;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
 
     .buttons {
@@ -115,7 +125,7 @@
 
     button {
       border: 0;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 18px;
       font-size: 18px;
       font-weight: 900;
@@ -125,8 +135,8 @@
 
     .yes { background: linear-gradient(135deg, #15803d, var(--green)); }
     .no { background: linear-gradient(135deg, #991b1b, var(--red)); }
+    .goldBtn { background: linear-gradient(135deg, #d97706, var(--gold)); color: #111827; }
     .plain { background: #334155; }
-    .gold { background: linear-gradient(135deg, #d97706, var(--gold)); color: #111827; }
 
     .small {
       display: block;
@@ -138,37 +148,31 @@
 
     .result-title {
       text-align: center;
-      margin-bottom: 12px;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
-    .model {
+    .main-result {
       text-align: center;
-      font-size: 40px;
+      font-size: 42px;
       color: var(--gold);
       font-weight: 900;
-      margin-bottom: 12px;
+      margin: 10px 0;
     }
 
     .score {
       text-align: center;
-      font-size: 20px;
+      font-size: 22px;
       margin-bottom: 24px;
     }
 
     .result-box {
       background: rgba(15, 23, 42, 0.8);
       border: 1px solid var(--line);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 20px;
       margin: 18px 0;
-    }
-
-    .result-box h3 {
-      color: var(--gold);
-      margin-top: 0;
     }
 
     .rank-list {
@@ -179,7 +183,7 @@
     .rank-item {
       background: #0f172a;
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 14px;
       cursor: pointer;
     }
@@ -187,12 +191,33 @@
     .rank-head {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       font-weight: 900;
       margin-bottom: 8px;
     }
 
-    .rank-bar { height: 10px; }
+    .rank-bar {
+      height: 10px;
+      background: #1e293b;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .rank-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), #fde68a);
+    }
+
+    .details {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .details strong { color: white; }
 
     .pill-row {
       display: flex;
@@ -203,22 +228,37 @@
 
     .pill {
       font-size: 12px;
-      color: var(--muted);
       border: 1px solid var(--line);
+      color: var(--muted);
       border-radius: 999px;
       padding: 5px 9px;
     }
 
-    .details {
-      display: none;
-      margin-top: 12px;
-      color: var(--muted);
-      line-height: 1.55;
-      border-top: 1px solid var(--line);
-      padding-top: 12px;
+    .podium {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 18px 0;
     }
 
-    .details strong { color: white; }
+    .podium-card {
+      background: #0f172a;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .podium-card .icon {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    canvas {
+      max-width: 100%;
+      margin: 0 auto;
+      display: block;
+    }
 
     .summary {
       white-space: pre-wrap;
@@ -230,32 +270,20 @@
       font-size: 14px;
     }
 
-    @media (max-width: 650px) {
-      body { padding: 16px; }
-      .header { align-items: flex-start; }
-      h1 { font-size: 26px; }
-      .question { font-size: 24px; }
-      .buttons { grid-template-columns: 1fr; }
-      .logo { width: 58px; height: 58px; font-size: 19px; }
-      .model { font-size: 31px; }
+    @media (max-width: 700px) {
+      h1 { font-size: 30px; }
+      .question { font-size: 25px; }
+      .buttons, .podium { grid-template-columns: 1fr; }
+      .main-result { font-size: 30px; }
+      .logo { width: 95px; height: 95px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="header">
-      <img class="logo-img" src="logo.png" alt="IQ2GQ logo">
-      <div>
-        <h1>IQ2GQ Betting Model Picker</h1>
-        <p class="subtitle">Where Intellect Meets Style - answer six questions to find your preferred model.</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <div id="content"></div>
-    </div>
-  </div>
+<div class="wrap">
+  <div class="card" id="content"></div>
+</div>
 
 <script>
 const questions = [
@@ -274,7 +302,7 @@ const questions = [
   {
     id: "steady",
     text: "Should steady return matter more than one big win?",
-    explain: "Choose YES if you want to reward members who produce reliable returns over time. Choose NO if the member who makes the most total dollars should simply rank highest.",
+    explain: "Choose YES if you want to reward members who produce reliable returns over time. Choose NO if the member who makes the most total dollars should rank highest.",
     yes: "roi",
     no: "profit",
     axis: "consistency",
@@ -310,7 +338,7 @@ const questions = [
   {
     id: "confidence",
     text: "Should confidence affect the score?",
-    explain: "Choose YES if members should be rewarded more for backing strong picks and punished more when those picks fail. Choose NO if you want a rating that adjusts over time based on form and difficulty.",
+    explain: "Choose YES if strong picks should earn more and failed confident picks should hurt more. Choose NO if you prefer a rating that adjusts over time.",
     yes: "confidenceModel",
     no: "elo",
     axis: "confidence",
@@ -322,7 +350,7 @@ const questions = [
   {
     id: "data",
     text: "Should past data guide weekly picks?",
-    explain: "Choose YES if member history by sport, betting type, odds and form should influence picks. Choose NO if you prefer a simple pressure model based on strikes and stand-downs.",
+    explain: "Choose YES if member history by sport, betting type, odds and form should influence picks. Choose NO if you prefer a simple pressure model.",
     yes: "ai",
     no: "survivor",
     axis: "data",
@@ -335,71 +363,79 @@ const questions = [
 
 const models = {
   roi: {
+    icon: "📈",
     name: "ROI Model",
     short: "Ranks members by return on investment.",
-    detail: "The ROI Model rewards members who get the best return for the money placed. It is stronger than total profit because it values efficiency, consistency and smarter risk management.",
+    detail: "This rewards members who get the best return for the money placed. It values efficiency, consistency and smarter risk management.",
     bestFor: "Members who want Rule #1 to matter but do not want one lucky high-odds win to dominate the season.",
     scores: { money: 90, consistency: 95, competition: 55, simple: 65, confidence: 45, data: 75 }
   },
   profit: {
+    icon: "💰",
     name: "Profit Model",
     short: "Ranks members by total dollars made.",
-    detail: "The Profit Model is the most direct money model. Whoever makes the most money ranks highest. It is easy to understand, but it can be distorted by one big-priced winner.",
+    detail: "This is the most direct money model. Whoever makes the most money ranks highest. It is simple, but one big win can distort the table.",
     bestFor: "Members who want the simplest Rule #1 model.",
     scores: { money: 98, consistency: 45, competition: 50, simple: 85, confidence: 55, data: 50 }
   },
   weighted: {
+    icon: "🏆",
     name: "Current Weighted Points",
     short: "Keeps the current points-based Presidency race.",
-    detail: "This keeps the current structure: win points, loss points, MM win points, bonus points and penalties. It protects the social competition but does not always reward the most profitable betting.",
+    detail: "This keeps win points, loss points, MM points, bonus points and penalties. It protects the social competition but does not always reward the most profitable betting.",
     bestFor: "Members who like the current format and want the Presidency race to stay central.",
     scores: { money: 55, consistency: 70, competition: 95, simple: 85, confidence: 45, data: 40 }
   },
   confidenceModel: {
+    icon: "🔥",
     name: "Confidence Model",
     short: "Members rate how confident they are in each pick.",
-    detail: "Members attach a confidence score to their pick. High-confidence wins earn more and high-confidence crashes cost more. It adds strategy but relies on honest self-assessment.",
-    bestFor: "Members who want conviction, risk and pressure to matter.",
+    detail: "High-confidence wins earn more. High-confidence crashes cost more. It adds strategy but relies on honest judgement.",
+    bestFor: "Members who want conviction, pressure and risk to matter.",
     scores: { money: 65, consistency: 60, competition: 80, simple: 55, confidence: 98, data: 55 }
   },
   elo: {
+    icon: "♟️",
     name: "Elo Rating Model",
     short: "A live rating system based on form and difficulty.",
-    detail: "Elo works like chess or sport rankings. Members gain or lose rating points based on results, difficulty and form. It gives a better long-term ranking but takes more explanation.",
+    detail: "Elo works like chess or sport rankings. Members gain or lose rating points based on results, difficulty and form.",
     bestFor: "Members who want a smarter ladder that updates over time.",
     scores: { money: 65, consistency: 85, competition: 80, simple: 45, confidence: 60, data: 75 }
   },
   ai: {
+    icon: "🤖",
     name: "AI Performance Model",
     short: "Uses member history to guide better weekly picks.",
-    detail: "The AI Performance Model uses past data by member, sport, betting type, odds range and current form. It can recommend where each member has the strongest edge.",
-    bestFor: "Members who want the Syndicate to learn from history and improve pick quality.",
+    detail: "This uses past data by member, sport, betting type, odds range and current form. It helps identify where each member has the strongest edge.",
+    bestFor: "Members who want IQ2GQ to learn from history and improve pick quality.",
     scores: { money: 85, consistency: 85, competition: 55, simple: 35, confidence: 55, data: 98 }
   },
   survivor: {
+    icon: "⚠️",
     name: "Survivor Model",
     short: "Wrong picks create strikes and stand-down pressure.",
-    detail: "This is a simple accountability model. Wrong picks earn strikes. Too many strikes lead to a stand-down. It is easy to follow but less useful for measuring betting skill.",
+    detail: "Wrong picks earn strikes. Too many strikes lead to a stand-down. It is easy to follow but less useful for measuring betting skill.",
     bestFor: "Members who want pressure and consequences without complex maths.",
     scores: { money: 55, consistency: 55, competition: 75, simple: 90, confidence: 70, data: 35 }
   },
   specialist: {
+    icon: "🎯",
     name: "Specialist Model",
     short: "Members focus on the sports or bet types they are best at.",
-    detail: "The Specialist Model uses member strengths. For example, one member may lead NRL, another NFL, another Super Rugby. This helps reduce weak picks outside a member's proven area.",
+    detail: "Each member leans into proven strengths. One member may lead NRL, another NFL, another Super Rugby.",
     bestFor: "Members who believe everyone should play to their strengths.",
     scores: { money: 80, consistency: 80, competition: 60, simple: 50, confidence: 55, data: 90 }
   },
   performanceIndex: {
+    icon: "⭐",
     name: "Performance Index",
     short: "One balanced score across several measures.",
-    detail: "The Performance Index combines success rate, ROI, profit, MM contribution, current form and risk. It is the most balanced model, but it needs clear rules and good data.",
+    detail: "Combines success rate, ROI, profit, MM contribution, form and risk. It is the most balanced option, but needs clean data.",
     bestFor: "Members who want one serious overall measure of performance.",
     scores: { money: 80, consistency: 90, competition: 75, simple: 40, confidence: 60, data: 85 }
   }
 };
 
-let current = "money";
 let questionNumber = 1;
 let userPrefs = {
   money: 50,
@@ -410,8 +446,26 @@ let userPrefs = {
   data: 50
 };
 
+function start() {
+  questionNumber = 1;
+  userPrefs = { money: 50, consistency: 50, competition: 50, simple: 50, confidence: 50, data: 50 };
+  showQuestion("money");
+}
+
+function intro() {
+  document.getElementById("content").innerHTML = `
+    <div class="centre">
+      <img class="logo" src="IQ2GQ%20Logo.png" alt="IQ2GQ Logo">
+      <h1>IQ2GQ Model Finder</h1>
+      <p class="subtitle">A short assessment to identify which betting model best reflects how you think the Syndicate should operate.</p>
+      <div class="rule">Where Intellect Meets Style - Est. 2011</div>
+      <p class="subtitle">You will answer six decision questions. At the end you will receive your best model match, a full ranked table, and a model explanation.</p>
+      <button class="goldBtn" onclick="start()">Start assessment</button>
+    </div>
+  `;
+}
+
 function showQuestion(id) {
-  current = id;
   const q = questions.find(x => x.id === id);
   const progress = Math.round((questionNumber - 1) / 6 * 100);
 
@@ -421,7 +475,6 @@ function showQuestion(id) {
       <span>${progress}% complete</span>
     </div>
     <div class="bar"><div class="fill" style="width:${progress}%"></div></div>
-    <div class="tag">QUESTION ${questionNumber}</div>
     <div class="question">${q.text}</div>
     <div class="explain">${q.explain}</div>
     <div class="buttons">
@@ -433,10 +486,8 @@ function showQuestion(id) {
 
 function answer(next, axis, value) {
   userPrefs[axis] = value;
-
-  if (models[next]) {
-    showResult();
-  } else {
+  if (models[next]) showResult();
+  else {
     questionNumber++;
     showQuestion(next);
   }
@@ -445,11 +496,7 @@ function answer(next, axis, value) {
 function modelMatch(model) {
   const axes = Object.keys(userPrefs);
   let total = 0;
-
-  axes.forEach(axis => {
-    total += 100 - Math.abs(userPrefs[axis] - model.scores[axis]);
-  });
-
+  axes.forEach(axis => total += 100 - Math.abs(userPrefs[axis] - model.scores[axis]));
   return Math.round(total / axes.length);
 }
 
@@ -462,13 +509,15 @@ function getRankedModels() {
 function showResult() {
   const ranked = getRankedModels();
   const top = ranked[0];
+  const second = ranked[1];
+  const third = ranked[2];
 
-  const summary = `IQ2GQ Betting Model Picker\n\nMy result: ${top.name}\nMatch: ${top.match}%\n\nWhat it means:\n${top.short}\n\n${top.detail}`;
+  const summary = `IQ2GQ Model Finder\n\nMy result: ${top.name}\nMatch: ${top.match}%\n\n${top.short}\n\n${top.detail}`;
 
-  const continuum = ranked.map((m, i) => `
+  const table = ranked.map((m, i) => `
     <div class="rank-item" onclick="toggleDetails('${m.id}')">
       <div class="rank-head">
-        <span>${i + 1}. ${m.name}</span>
+        <span>${i + 1}. ${m.icon} ${m.name}</span>
         <span>${m.match}%</span>
       </div>
       <div class="rank-bar"><div class="rank-fill" style="width:${m.match}%"></div></div>
@@ -493,50 +542,119 @@ function showResult() {
     </div>
     <div class="bar"><div class="fill" style="width:100%"></div></div>
 
-    <div class="result-title">Your preferred model is</div>
-    <div class="model">${top.name}</div>
+    <div class="result-title">Your best match</div>
+    <div class="main-result">${top.icon} ${top.name}</div>
     <div class="score">${top.match}% match</div>
 
+    <div class="podium">
+      <div class="podium-card"><div class="icon">🥇</div><strong>${top.name}</strong><br>${top.match}%</div>
+      <div class="podium-card"><div class="icon">🥈</div><strong>${second.name}</strong><br>${second.match}%</div>
+      <div class="podium-card"><div class="icon">🥉</div><strong>${third.name}</strong><br>${third.match}%</div>
+    </div>
+
     <div class="result-box">
-      <h3>What this means</h3>
+      <h2>What this means</h2>
       <p>${top.detail}</p>
       <p><strong>Best for:</strong> ${top.bestFor}</p>
     </div>
 
     <div class="result-box">
-      <h3>All models ranked against your answers</h3>
-      <p class="explain">Tap any model below to see what it means and who it suits.</p>
-      <div class="rank-list">${continuum}</div>
+      <h2>Your preference profile</h2>
+      <canvas id="radar" width="520" height="420"></canvas>
     </div>
 
     <div class="result-box">
-      <h3>Copy this result for WhatsApp</h3>
+      <h2>All models ranked</h2>
+      <p class="explain">Tap any model to see what it means and who it suits.</p>
+      <div class="rank-list">${table}</div>
+    </div>
+
+    <div class="result-box">
+      <h2>AGM-style recommendation</h2>
+      <p>Do not treat this as a binding vote. Use it to guide discussion. If most members cluster around data-led models, IQ2GQ should consider keeping the current Presidency competition while using AI, ROI or Performance Index scoring to support better weekly betting decisions.</p>
+    </div>
+
+    <div class="result-box">
+      <h2>Copy this result</h2>
       <div class="summary" id="summary">${summary}</div>
     </div>
 
     <div class="buttons">
-      <button class="plain" onclick="restart()">Start again</button>
-      <button class="gold" onclick="copyResult()">Copy result</button>
+      <button class="plain" onclick="intro()">Start again</button>
+      <button class="goldBtn" onclick="copyResult()">Copy result</button>
     </div>
   `;
+
+  drawRadar(top);
+}
+
+function drawRadar(top) {
+  const canvas = document.getElementById("radar");
+  const ctx = canvas.getContext("2d");
+  const axes = ["money", "consistency", "competition", "simple", "data"];
+  const labels = ["Profit", "Consistency", "Competition", "Simplicity", "Data"];
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2 + 10;
+  const radius = 145;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "#334155";
+  ctx.fillStyle = "#cbd5e1";
+  ctx.lineWidth = 1;
+
+  for (let ring = 1; ring <= 5; ring++) {
+    ctx.beginPath();
+    axes.forEach((axis, i) => {
+      const angle = -Math.PI / 2 + (i * 2 * Math.PI / axes.length);
+      const r = radius * ring / 5;
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  axes.forEach((axis, i) => {
+    const angle = -Math.PI / 2 + (i * 2 * Math.PI / axes.length);
+    const x = cx + Math.cos(angle) * (radius + 45);
+    const y = cy + Math.sin(angle) * (radius + 45);
+    ctx.fillText(labels[i], x - 35, y);
+  });
+
+  drawShape(axes.map(a => userPrefs[a]), "rgba(251,191,36,0.35)", "#fbbf24");
+  drawShape(axes.map(a => top.scores[a]), "rgba(148,163,184,0.15)", "#94a3b8");
+}
+
+function drawShape(values, fill, stroke) {
+  const canvas = document.getElementById("radar");
+  const ctx = canvas.getContext("2d");
+  const axes = values.length;
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2 + 10;
+  const radius = 145;
+
+  ctx.beginPath();
+  values.forEach((value, i) => {
+    const angle = -Math.PI / 2 + (i * 2 * Math.PI / axes);
+    const r = radius * value / 100;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = 3;
+  ctx.stroke();
 }
 
 function toggleDetails(id) {
   const el = document.getElementById(`details-${id}`);
   el.style.display = el.style.display === "block" ? "none" : "block";
-}
-
-function restart() {
-  questionNumber = 1;
-  userPrefs = {
-    money: 50,
-    consistency: 50,
-    competition: 50,
-    simple: 50,
-    confidence: 50,
-    data: 50
-  };
-  showQuestion("money");
 }
 
 function copyResult() {
@@ -545,7 +663,7 @@ function copyResult() {
   alert("Result copied.");
 }
 
-showQuestion("money");
+intro();
 </script>
 </body>
 </html>
