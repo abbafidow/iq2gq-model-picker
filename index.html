@@ -28,10 +28,7 @@
       padding: 24px;
     }
 
-    .wrap {
-      max-width: 900px;
-      margin: 0 auto;
-    }
+    .wrap { max-width: 950px; margin: 0 auto; }
 
     .header {
       display: flex;
@@ -52,17 +49,8 @@
       font-size: 24px;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 34px;
-      letter-spacing: 0.5px;
-    }
-
-    .subtitle {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 16px;
-    }
+    h1 { margin: 0; font-size: 34px; }
+    .subtitle { margin: 6px 0 0; color: var(--muted); }
 
     .card {
       background: linear-gradient(180deg, var(--card), var(--card2));
@@ -80,21 +68,17 @@
       margin-bottom: 12px;
     }
 
-    .bar {
-      width: 100%;
-      height: 12px;
+    .bar, .mini-bar, .rank-bar {
       background: #0f172a;
       border-radius: 999px;
       overflow: hidden;
       border: 1px solid var(--line);
-      margin-bottom: 28px;
     }
 
-    .fill {
+    .bar { height: 12px; margin-bottom: 28px; }
+    .fill, .mini-fill, .rank-fill {
       height: 100%;
-      width: 0%;
       background: linear-gradient(90deg, var(--gold), #fde68a);
-      transition: width 0.3s ease;
     }
 
     .tag {
@@ -119,7 +103,7 @@
       color: var(--muted);
       line-height: 1.6;
       font-size: 17px;
-      max-width: 720px;
+      max-width: 760px;
       margin-bottom: 28px;
     }
 
@@ -137,12 +121,6 @@
       font-weight: 900;
       cursor: pointer;
       color: white;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      opacity: 0.95;
     }
 
     .yes { background: linear-gradient(135deg, #15803d, var(--green)); }
@@ -193,37 +171,54 @@
       margin-top: 0;
     }
 
-    .matches {
+    .rank-list {
       display: grid;
       gap: 12px;
-      margin-top: 14px;
     }
 
-    .match {
+    .rank-item {
       background: #0f172a;
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px;
+      border-radius: 14px;
+      padding: 14px;
+      cursor: pointer;
     }
 
-    .match-head {
+    .rank-head {
       display: flex;
       justify-content: space-between;
+      gap: 12px;
+      font-weight: 900;
       margin-bottom: 8px;
-      font-weight: 800;
     }
 
-    .mini-bar {
-      height: 8px;
-      background: #1e293b;
+    .rank-bar { height: 10px; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--line);
       border-radius: 999px;
-      overflow: hidden;
+      padding: 5px 9px;
     }
 
-    .mini-fill {
-      height: 100%;
-      background: var(--gold);
+    .details {
+      display: none;
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
     }
+
+    .details strong { color: white; }
 
     .summary {
       white-space: pre-wrap;
@@ -242,6 +237,7 @@
       .question { font-size: 24px; }
       .buttons { grid-template-columns: 1fr; }
       .logo { width: 58px; height: 58px; font-size: 19px; }
+      .model { font-size: 31px; }
     }
   </style>
 </head>
@@ -269,6 +265,7 @@ const questions = [
     explain: "Rule #1 says we are here to make money. Choose YES if the model should mainly reward profit. Choose NO if the Presidency race, banter and competition matter just as much.",
     yes: "steady",
     no: "competition",
+    axis: "money",
     yesText: "YES",
     yesSmall: "Money first",
     noText: "NO",
@@ -280,6 +277,7 @@ const questions = [
     explain: "Choose YES if you want to reward members who produce reliable returns over time. Choose NO if the member who makes the most total dollars should simply rank highest.",
     yes: "roi",
     no: "profit",
+    axis: "consistency",
     yesText: "YES",
     yesSmall: "Reward consistency",
     noText: "NO",
@@ -291,6 +289,7 @@ const questions = [
     explain: "Choose YES if the model should still feel like a season-long competition. Choose NO if the model should mainly help the Syndicate choose better bets.",
     yes: "simple",
     no: "data",
+    axis: "competition",
     yesText: "YES",
     yesSmall: "Keep the race alive",
     noText: "NO",
@@ -302,6 +301,7 @@ const questions = [
     explain: "Choose YES if members should understand the ladder quickly. Choose NO if you are open to a smarter ranking system that may need more explanation.",
     yes: "weighted",
     no: "confidence",
+    axis: "simple",
     yesText: "YES",
     yesSmall: "Keep it simple",
     noText: "NO",
@@ -313,6 +313,7 @@ const questions = [
     explain: "Choose YES if members should be rewarded more for backing strong picks and punished more when those picks fail. Choose NO if you want a rating that adjusts over time based on form and difficulty.",
     yes: "confidenceModel",
     no: "elo",
+    axis: "confidence",
     yesText: "YES",
     yesSmall: "Conviction should count",
     noText: "NO",
@@ -324,6 +325,7 @@ const questions = [
     explain: "Choose YES if member history by sport, betting type, odds and form should influence picks. Choose NO if you prefer a simple pressure model based on strikes and stand-downs.",
     yes: "ai",
     no: "survivor",
+    axis: "data",
     yesText: "YES",
     yesSmall: "Use the data",
     noText: "NO",
@@ -331,60 +333,82 @@ const questions = [
   }
 ];
 
-const results = {
+const models = {
   roi: {
-    model: "ROI Model",
-    score: 88,
-    text: "Ranks members by return on investment. It rewards smart, steady betting rather than one lucky big win.",
-    why: ["You want Rule #1 to matter.", "You value long-term return.", "You want a fair comparison between members."],
-    alt: [{m:"AI Performance",s:76},{m:"Profit Model",s:70},{m:"Weighted Points",s:58}]
+    name: "ROI Model",
+    short: "Ranks members by return on investment.",
+    detail: "The ROI Model rewards members who get the best return for the money placed. It is stronger than total profit because it values efficiency, consistency and smarter risk management.",
+    bestFor: "Members who want Rule #1 to matter but do not want one lucky high-odds win to dominate the season.",
+    scores: { money: 90, consistency: 95, competition: 55, simple: 65, confidence: 45, data: 75 }
   },
   profit: {
-    model: "Profit Model",
-    score: 84,
-    text: "Ranks members by total money made. It is simple and directly linked to Rule #1.",
-    why: ["You want money to be the clearest measure.", "You prefer simple rankings.", "You accept that big wins can shift the table."],
-    alt: [{m:"ROI Model",s:72},{m:"AI Performance",s:66},{m:"Confidence Model",s:56}]
+    name: "Profit Model",
+    short: "Ranks members by total dollars made.",
+    detail: "The Profit Model is the most direct money model. Whoever makes the most money ranks highest. It is easy to understand, but it can be distorted by one big-priced winner.",
+    bestFor: "Members who want the simplest Rule #1 model.",
+    scores: { money: 98, consistency: 45, competition: 50, simple: 85, confidence: 55, data: 50 }
   },
   weighted: {
-    model: "Current Weighted Points",
-    score: 86,
-    text: "Keeps the current style: wins, losses, MM points, bonuses and penalties. Best for the Presidency race.",
-    why: ["You like the current competition.", "You want the system to stay familiar.", "You value engagement as well as results."],
-    alt: [{m:"Elo Rating",s:70},{m:"Confidence Model",s:64},{m:"ROI Model",s:55}]
+    name: "Current Weighted Points",
+    short: "Keeps the current points-based Presidency race.",
+    detail: "This keeps the current structure: win points, loss points, MM win points, bonus points and penalties. It protects the social competition but does not always reward the most profitable betting.",
+    bestFor: "Members who like the current format and want the Presidency race to stay central.",
+    scores: { money: 55, consistency: 70, competition: 95, simple: 85, confidence: 45, data: 40 }
   },
   confidenceModel: {
-    model: "Confidence Model",
-    score: 82,
-    text: "Members rate each pick by confidence. High-confidence wins help more. High-confidence crashes hurt more.",
-    why: ["You want conviction to matter.", "You are comfortable with extra strategy.", "You want risky calls to carry consequences."],
-    alt: [{m:"Elo Rating",s:74},{m:"Weighted Points",s:68},{m:"Profit Model",s:60}]
+    name: "Confidence Model",
+    short: "Members rate how confident they are in each pick.",
+    detail: "Members attach a confidence score to their pick. High-confidence wins earn more and high-confidence crashes cost more. It adds strategy but relies on honest self-assessment.",
+    bestFor: "Members who want conviction, risk and pressure to matter.",
+    scores: { money: 65, consistency: 60, competition: 80, simple: 55, confidence: 98, data: 55 }
   },
   elo: {
-    model: "Elo Rating Model",
-    score: 81,
-    text: "Works like a sports ranking. Ratings move up or down based on results, difficulty and form.",
-    why: ["You want a smarter ranking system.", "You care about long-term form.", "You do not need the model to be basic."],
-    alt: [{m:"Performance Index",s:78},{m:"Weighted Points",s:65},{m:"Confidence Model",s:62}]
+    name: "Elo Rating Model",
+    short: "A live rating system based on form and difficulty.",
+    detail: "Elo works like chess or sport rankings. Members gain or lose rating points based on results, difficulty and form. It gives a better long-term ranking but takes more explanation.",
+    bestFor: "Members who want a smarter ladder that updates over time.",
+    scores: { money: 65, consistency: 85, competition: 80, simple: 45, confidence: 60, data: 75 }
   },
   ai: {
-    model: "AI Performance Model",
-    score: 90,
-    text: "Uses member history to guide better betting decisions by sport, market, odds range and form.",
-    why: ["You want data to influence picks.", "You want to use member strengths.", "You want the Syndicate to learn over time."],
-    alt: [{m:"ROI Model",s:80},{m:"Specialist Model",s:74},{m:"Performance Index",s:72}]
+    name: "AI Performance Model",
+    short: "Uses member history to guide better weekly picks.",
+    detail: "The AI Performance Model uses past data by member, sport, betting type, odds range and current form. It can recommend where each member has the strongest edge.",
+    bestFor: "Members who want the Syndicate to learn from history and improve pick quality.",
+    scores: { money: 85, consistency: 85, competition: 55, simple: 35, confidence: 55, data: 98 }
   },
   survivor: {
-    model: "Survivor Model",
-    score: 79,
-    text: "A pressure model. Wrong picks earn strikes. Too many strikes lead to a stand-down.",
-    why: ["You want a simple accountability model.", "You like pressure.", "You want consequences for repeated failed weeks."],
-    alt: [{m:"Weighted Points",s:66},{m:"Confidence Model",s:62},{m:"ROI Model",s:55}]
+    name: "Survivor Model",
+    short: "Wrong picks create strikes and stand-down pressure.",
+    detail: "This is a simple accountability model. Wrong picks earn strikes. Too many strikes lead to a stand-down. It is easy to follow but less useful for measuring betting skill.",
+    bestFor: "Members who want pressure and consequences without complex maths.",
+    scores: { money: 55, consistency: 55, competition: 75, simple: 90, confidence: 70, data: 35 }
+  },
+  specialist: {
+    name: "Specialist Model",
+    short: "Members focus on the sports or bet types they are best at.",
+    detail: "The Specialist Model uses member strengths. For example, one member may lead NRL, another NFL, another Super Rugby. This helps reduce weak picks outside a member's proven area.",
+    bestFor: "Members who believe everyone should play to their strengths.",
+    scores: { money: 80, consistency: 80, competition: 60, simple: 50, confidence: 55, data: 90 }
+  },
+  performanceIndex: {
+    name: "Performance Index",
+    short: "One balanced score across several measures.",
+    detail: "The Performance Index combines success rate, ROI, profit, MM contribution, current form and risk. It is the most balanced model, but it needs clear rules and good data.",
+    bestFor: "Members who want one serious overall measure of performance.",
+    scores: { money: 80, consistency: 90, competition: 75, simple: 40, confidence: 60, data: 85 }
   }
 };
 
 let current = "money";
 let questionNumber = 1;
+let userPrefs = {
+  money: 50,
+  consistency: 50,
+  competition: 50,
+  simple: 50,
+  confidence: 50,
+  data: 50
+};
 
 function showQuestion(id) {
   current = id;
@@ -401,29 +425,64 @@ function showQuestion(id) {
     <div class="question">${q.text}</div>
     <div class="explain">${q.explain}</div>
     <div class="buttons">
-      <button class="yes" onclick="answer('${q.yes}')">${q.yesText}<span class="small">${q.yesSmall}</span></button>
-      <button class="no" onclick="answer('${q.no}')">${q.noText}<span class="small">${q.noSmall}</span></button>
+      <button class="yes" onclick="answer('${q.yes}', '${q.axis}', 100)">${q.yesText}<span class="small">${q.yesSmall}</span></button>
+      <button class="no" onclick="answer('${q.no}', '${q.axis}', 0)">${q.noText}<span class="small">${q.noSmall}</span></button>
     </div>
   `;
 }
 
-function answer(next) {
-  if (results[next]) {
-    showResult(next);
+function answer(next, axis, value) {
+  userPrefs[axis] = value;
+
+  if (models[next]) {
+    showResult();
   } else {
     questionNumber++;
     showQuestion(next);
   }
 }
 
-function showResult(id) {
-  const r = results[id];
-  const summary = `IQ2GQ Betting Model Picker\n\nMy result: ${r.model}\nMatch: ${r.score}%\n\nWhy this suits me:\n- ${r.why.join("\n- ")}\n\n${r.text}`;
+function modelMatch(model) {
+  const axes = Object.keys(userPrefs);
+  let total = 0;
 
-  const matches = r.alt.map(x => `
-    <div class="match">
-      <div class="match-head"><span>${x.m}</span><span>${x.s}%</span></div>
-      <div class="mini-bar"><div class="mini-fill" style="width:${x.s}%"></div></div>
+  axes.forEach(axis => {
+    total += 100 - Math.abs(userPrefs[axis] - model.scores[axis]);
+  });
+
+  return Math.round(total / axes.length);
+}
+
+function getRankedModels() {
+  return Object.keys(models)
+    .map(id => ({ id, ...models[id], match: modelMatch(models[id]) }))
+    .sort((a, b) => b.match - a.match);
+}
+
+function showResult() {
+  const ranked = getRankedModels();
+  const top = ranked[0];
+
+  const summary = `IQ2GQ Betting Model Picker\n\nMy result: ${top.name}\nMatch: ${top.match}%\n\nWhat it means:\n${top.short}\n\n${top.detail}`;
+
+  const continuum = ranked.map((m, i) => `
+    <div class="rank-item" onclick="toggleDetails('${m.id}')">
+      <div class="rank-head">
+        <span>${i + 1}. ${m.name}</span>
+        <span>${m.match}%</span>
+      </div>
+      <div class="rank-bar"><div class="rank-fill" style="width:${m.match}%"></div></div>
+      <div class="pill-row">
+        <span class="pill">Money ${m.scores.money}</span>
+        <span class="pill">Consistency ${m.scores.consistency}</span>
+        <span class="pill">Competition ${m.scores.competition}</span>
+        <span class="pill">Simple ${m.scores.simple}</span>
+        <span class="pill">Data ${m.scores.data}</span>
+      </div>
+      <div class="details" id="details-${m.id}">
+        <p><strong>What it is:</strong> ${m.detail}</p>
+        <p><strong>Best for:</strong> ${m.bestFor}</p>
+      </div>
     </div>
   `).join("");
 
@@ -435,22 +494,19 @@ function showResult(id) {
     <div class="bar"><div class="fill" style="width:100%"></div></div>
 
     <div class="result-title">Your preferred model is</div>
-    <div class="model">${r.model}</div>
-    <div class="score">${r.score}% match</div>
+    <div class="model">${top.name}</div>
+    <div class="score">${top.match}% match</div>
 
     <div class="result-box">
       <h3>What this means</h3>
-      <p>${r.text}</p>
+      <p>${top.detail}</p>
+      <p><strong>Best for:</strong> ${top.bestFor}</p>
     </div>
 
     <div class="result-box">
-      <h3>Why this model might suit you</h3>
-      <ul>${r.why.map(x => `<li>${x}</li>`).join("")}</ul>
-    </div>
-
-    <div class="result-box">
-      <h3>Other models you may also like</h3>
-      <div class="matches">${matches}</div>
+      <h3>All models ranked against your answers</h3>
+      <p class="explain">Tap any model below to see what it means and who it suits.</p>
+      <div class="rank-list">${continuum}</div>
     </div>
 
     <div class="result-box">
@@ -465,8 +521,21 @@ function showResult(id) {
   `;
 }
 
+function toggleDetails(id) {
+  const el = document.getElementById(`details-${id}`);
+  el.style.display = el.style.display === "block" ? "none" : "block";
+}
+
 function restart() {
   questionNumber = 1;
+  userPrefs = {
+    money: 50,
+    consistency: 50,
+    competition: 50,
+    simple: 50,
+    confidence: 50,
+    data: 50
+  };
   showQuestion("money");
 }
 
