@@ -5,157 +5,478 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IQ2GQ Betting Model Picker</title>
   <style>
+    :root {
+      --bg: #07111f;
+      --card: #101c2c;
+      --card2: #162337;
+      --gold: #fbbf24;
+      --green: #22c55e;
+      --red: #ef4444;
+      --text: #f9fafb;
+      --muted: #cbd5e1;
+      --line: #334155;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #111827;
-      color: white;
-      display: flex;
-      justify-content: center;
+      background: radial-gradient(circle at top, #10233d, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
       padding: 24px;
     }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      font-weight: 900;
+      font-size: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
     .card {
-      max-width: 680px;
-      width: 100%;
-      background: #1f2937;
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid var(--line);
+      border-radius: 22px;
       padding: 28px;
-      border-radius: 18px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
     }
-    h1 { margin-top: 0; color: #fbbf24; }
-    .question { font-size: 1.35rem; margin: 22px 0 8px; font-weight: bold; }
-    .explain { color: #d1d5db; line-height: 1.5; margin-bottom: 20px; }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .bar {
+      width: 100%;
+      height: 12px;
+      background: #0f172a;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin-bottom: 28px;
+    }
+
+    .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), #fde68a);
+      transition: width 0.3s ease;
+    }
+
+    .tag {
+      display: inline-block;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .question {
+      font-size: 30px;
+      font-weight: 900;
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+
+    .explain {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 17px;
+      max-width: 720px;
+      margin-bottom: 28px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
     button {
-      width: 48%;
-      padding: 15px;
-      margin: 5px 1%;
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: bold;
+      border: 0;
+      border-radius: 16px;
+      padding: 18px;
+      font-size: 18px;
+      font-weight: 900;
       cursor: pointer;
+      color: white;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
-    .yes { background: #22c55e; color: #111827; }
-    .no { background: #ef4444; color: white; }
-    .reset { width: 100%; background: #fbbf24; color: #111827; margin-top: 20px; }
-    .result { background: #374151; padding: 20px; border-radius: 12px; margin-top: 20px; }
-    .model { font-size: 1.6rem; color: #fbbf24; font-weight: bold; margin: 10px 0; }
+
+    button:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    .yes { background: linear-gradient(135deg, #15803d, var(--green)); }
+    .no { background: linear-gradient(135deg, #991b1b, var(--red)); }
+    .plain { background: #334155; }
+    .gold { background: linear-gradient(135deg, #d97706, var(--gold)); color: #111827; }
+
+    .small {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      margin-top: 6px;
+      opacity: 0.9;
+    }
+
+    .result-title {
+      text-align: center;
+      margin-bottom: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .model {
+      text-align: center;
+      font-size: 40px;
+      color: var(--gold);
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .score {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+
+    .result-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 18px 0;
+    }
+
+    .result-box h3 {
+      color: var(--gold);
+      margin-top: 0;
+    }
+
+    .matches {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .match {
+      background: #0f172a;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .match-head {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-weight: 800;
+    }
+
+    .mini-bar {
+      height: 8px;
+      background: #1e293b;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .mini-fill {
+      height: 100%;
+      background: var(--gold);
+    }
+
+    .summary {
+      white-space: pre-wrap;
+      background: #020617;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 650px) {
+      body { padding: 16px; }
+      .header { align-items: flex-start; }
+      h1 { font-size: 26px; }
+      .question { font-size: 24px; }
+      .buttons { grid-template-columns: 1fr; }
+      .logo { width: 58px; height: 58px; font-size: 19px; }
+    }
   </style>
 </head>
-<body>
 
-<div class="card">
-  <h1>IQ2GQ Betting Model Picker</h1>
-  <p>Answer yes or no. Each question explains what it means.</p>
-  <div id="content"></div>
-</div>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div class="logo">IQ</div>
+      <div>
+        <h1>IQ2GQ Betting Model Picker</h1>
+        <p class="subtitle">Where Intellect Meets Style - answer six questions to find your preferred model.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="content"></div>
+    </div>
+  </div>
 
 <script>
-const questions = {
-  q1: {
-    text: "Is making the most money the top priority?",
-    explain: "Choose YES if Rule 1 matters most and the model should mainly reward profit. Choose NO if the competition, banter and Presidency race matter just as much.",
-    yes: "q2",
-    no: "q5"
+const questions = [
+  {
+    id: "money",
+    text: "Should Rule #1 be the main priority?",
+    explain: "Rule #1 says we are here to make money. Choose YES if the model should mainly reward profit. Choose NO if the Presidency race, banter and competition matter just as much.",
+    yes: "steady",
+    no: "competition",
+    yesText: "YES",
+    yesSmall: "Money first",
+    noText: "NO",
+    noSmall: "Competition matters too"
   },
-  q2: {
-    text: "Should long-term return matter more than one big win?",
-    explain: "Choose YES if you want to reward members who make steady money over time. Choose NO if the member who makes the most total dollars should simply rank highest.",
+  {
+    id: "steady",
+    text: "Should steady return matter more than one big win?",
+    explain: "Choose YES if you want to reward members who produce reliable returns over time. Choose NO if the member who makes the most total dollars should simply rank highest.",
     yes: "roi",
-    no: "profit"
+    no: "profit",
+    yesText: "YES",
+    yesSmall: "Reward consistency",
+    noText: "NO",
+    noSmall: "Total dollars wins"
   },
-  q5: {
-    text: "Is the competition more important than profit?",
-    explain: "Choose YES if you mainly want a strong Presidency race and live ladder. Choose NO if you want the model to guide better betting decisions.",
-    yes: "q6",
-    no: "q8"
+  {
+    id: "competition",
+    text: "Do you want to keep a strong Presidency race?",
+    explain: "Choose YES if the model should still feel like a season-long competition. Choose NO if the model should mainly help the Syndicate choose better bets.",
+    yes: "simple",
+    no: "data",
+    yesText: "YES",
+    yesSmall: "Keep the race alive",
+    noText: "NO",
+    noSmall: "Focus on better picks"
   },
-  q6: {
-    text: "Do you prefer a simple system?",
-    explain: "Choose YES if members should understand the ladder quickly. Choose NO if you are open to a smarter system that may need more explanation.",
+  {
+    id: "simple",
+    text: "Should the system stay easy to understand?",
+    explain: "Choose YES if members should understand the ladder quickly. Choose NO if you are open to a smarter ranking system that may need more explanation.",
     yes: "weighted",
-    no: "q7"
+    no: "confidence",
+    yesText: "YES",
+    yesSmall: "Keep it simple",
+    noText: "NO",
+    noSmall: "Smarter system is fine"
   },
-  q7: {
-    text: "Should confidence in a pick affect the score?",
-    explain: "Choose YES if members should get more reward for backing strong picks and more punishment when those picks fail. Choose NO if you want a ranking that adjusts based on results and difficulty over time.",
-    yes: "confidence",
-    no: "elo"
+  {
+    id: "confidence",
+    text: "Should confidence affect the score?",
+    explain: "Choose YES if members should be rewarded more for backing strong picks and punished more when those picks fail. Choose NO if you want a rating that adjusts over time based on form and difficulty.",
+    yes: "confidenceModel",
+    no: "elo",
+    yesText: "YES",
+    yesSmall: "Conviction should count",
+    noText: "NO",
+    noSmall: "Let ratings adjust"
   },
-  q8: {
-    text: "Do you want data and member history to influence picks?",
-    explain: "Choose YES if past performance by sport, option and odds should help shape the weekly multi. Choose NO if you prefer a simple strike-based system.",
+  {
+    id: "data",
+    text: "Should past data guide weekly picks?",
+    explain: "Choose YES if member history by sport, betting type, odds and form should influence picks. Choose NO if you prefer a simple pressure model based on strikes and stand-downs.",
     yes: "ai",
-    no: "survivor"
+    no: "survivor",
+    yesText: "YES",
+    yesSmall: "Use the data",
+    noText: "NO",
+    noSmall: "Keep pressure simple"
   }
-};
+];
 
 const results = {
   roi: {
     model: "ROI Model",
-    text: "This ranks members by return on investment. It rewards people who produce the best return for the money placed. It is stronger than total profit because it values consistency, not just one big win."
+    score: 88,
+    text: "Ranks members by return on investment. It rewards smart, steady betting rather than one lucky big win.",
+    why: ["You want Rule #1 to matter.", "You value long-term return.", "You want a fair comparison between members."],
+    alt: [{m:"AI Performance",s:76},{m:"Profit Model",s:70},{m:"Weighted Points",s:58}]
   },
   profit: {
     model: "Profit Model",
-    text: "This ranks members by total money made. It is simple and clearly linked to Rule 1. The risk is that one lucky high-odds win can outweigh months of steady performance."
+    score: 84,
+    text: "Ranks members by total money made. It is simple and directly linked to Rule #1.",
+    why: ["You want money to be the clearest measure.", "You prefer simple rankings.", "You accept that big wins can shift the table."],
+    alt: [{m:"ROI Model",s:72},{m:"AI Performance",s:66},{m:"Confidence Model",s:56}]
   },
   weighted: {
-    model: "Current Weighted Points Model",
-    text: "This keeps the current style. Members earn points for wins, MM success, bonuses and penalties. It is familiar and good for competition, but it does not always reward the best money-making picks."
+    model: "Current Weighted Points",
+    score: 86,
+    text: "Keeps the current style: wins, losses, MM points, bonuses and penalties. Best for the Presidency race.",
+    why: ["You like the current competition.", "You want the system to stay familiar.", "You value engagement as well as results."],
+    alt: [{m:"Elo Rating",s:70},{m:"Confidence Model",s:64},{m:"ROI Model",s:55}]
   },
-  confidence: {
+  confidenceModel: {
     model: "Confidence Model",
-    text: "Members rate how confident they are in each pick. High-confidence wins earn more. High-confidence losses hurt more. This rewards conviction but relies on members judging their picks honestly."
+    score: 82,
+    text: "Members rate each pick by confidence. High-confidence wins help more. High-confidence crashes hurt more.",
+    why: ["You want conviction to matter.", "You are comfortable with extra strategy.", "You want risky calls to carry consequences."],
+    alt: [{m:"Elo Rating",s:74},{m:"Weighted Points",s:68},{m:"Profit Model",s:60}]
   },
   elo: {
     model: "Elo Rating Model",
-    text: "This works like a sports or chess rating. Members gain or lose rating points based on results, form and difficulty. It is good for long-term ranking but takes more explanation."
+    score: 81,
+    text: "Works like a sports ranking. Ratings move up or down based on results, difficulty and form.",
+    why: ["You want a smarter ranking system.", "You care about long-term form.", "You do not need the model to be basic."],
+    alt: [{m:"Performance Index",s:78},{m:"Weighted Points",s:65},{m:"Confidence Model",s:62}]
   },
   ai: {
     model: "AI Performance Model",
-    text: "This uses past data to guide better picks. It can look at each member's history by sport, betting type, odds range and current form. It is the strongest data-led option, but less simple than a normal ladder."
+    score: 90,
+    text: "Uses member history to guide better betting decisions by sport, market, odds range and form.",
+    why: ["You want data to influence picks.", "You want to use member strengths.", "You want the Syndicate to learn over time."],
+    alt: [{m:"ROI Model",s:80},{m:"Specialist Model",s:74},{m:"Performance Index",s:72}]
   },
   survivor: {
     model: "Survivor Model",
-    text: "This is a simple pressure model. Wrong picks earn strikes. Too many strikes lead to a stand-down. It is easy to understand, but less useful for identifying the best long-term bettor."
+    score: 79,
+    text: "A pressure model. Wrong picks earn strikes. Too many strikes lead to a stand-down.",
+    why: ["You want a simple accountability model.", "You like pressure.", "You want consequences for repeated failed weeks."],
+    alt: [{m:"Weighted Points",s:66},{m:"Confidence Model",s:62},{m:"ROI Model",s:55}]
   }
 };
 
+let current = "money";
+let questionNumber = 1;
+
 function showQuestion(id) {
-  const q = questions[id];
+  current = id;
+  const q = questions.find(x => x.id === id);
+  const progress = Math.round((questionNumber - 1) / 6 * 100);
+
   document.getElementById("content").innerHTML = `
+    <div class="progress-top">
+      <span>Question ${questionNumber} of 6</span>
+      <span>${progress}% complete</span>
+    </div>
+    <div class="bar"><div class="fill" style="width:${progress}%"></div></div>
+    <div class="tag">QUESTION ${questionNumber}</div>
     <div class="question">${q.text}</div>
     <div class="explain">${q.explain}</div>
-    <button class="yes" onclick="answer('${q.yes}')">YES</button>
-    <button class="no" onclick="answer('${q.no}')">NO</button>
-  `;
-}
-
-function showResult(id) {
-  const r = results[id];
-  document.getElementById("content").innerHTML = `
-    <div class="result">
-      <div>Your likely preferred model is:</div>
-      <div class="model">${r.model}</div>
-      <p>${r.text}</p>
-      <button class="reset" onclick="restart()">Start again</button>
+    <div class="buttons">
+      <button class="yes" onclick="answer('${q.yes}')">${q.yesText}<span class="small">${q.yesSmall}</span></button>
+      <button class="no" onclick="answer('${q.no}')">${q.noText}<span class="small">${q.noSmall}</span></button>
     </div>
   `;
 }
 
 function answer(next) {
-  if (questions[next]) {
-    showQuestion(next);
-  } else {
+  if (results[next]) {
     showResult(next);
+  } else {
+    questionNumber++;
+    showQuestion(next);
   }
 }
 
-function restart() {
-  showQuestion("q1");
+function showResult(id) {
+  const r = results[id];
+  const summary = `IQ2GQ Betting Model Picker\n\nMy result: ${r.model}\nMatch: ${r.score}%\n\nWhy this suits me:\n- ${r.why.join("\n- ")}\n\n${r.text}`;
+
+  const matches = r.alt.map(x => `
+    <div class="match">
+      <div class="match-head"><span>${x.m}</span><span>${x.s}%</span></div>
+      <div class="mini-bar"><div class="mini-fill" style="width:${x.s}%"></div></div>
+    </div>
+  `).join("");
+
+  document.getElementById("content").innerHTML = `
+    <div class="progress-top">
+      <span>Result</span>
+      <span>100% complete</span>
+    </div>
+    <div class="bar"><div class="fill" style="width:100%"></div></div>
+
+    <div class="result-title">Your preferred model is</div>
+    <div class="model">${r.model}</div>
+    <div class="score">${r.score}% match</div>
+
+    <div class="result-box">
+      <h3>What this means</h3>
+      <p>${r.text}</p>
+    </div>
+
+    <div class="result-box">
+      <h3>Why this model might suit you</h3>
+      <ul>${r.why.map(x => `<li>${x}</li>`).join("")}</ul>
+    </div>
+
+    <div class="result-box">
+      <h3>Other models you may also like</h3>
+      <div class="matches">${matches}</div>
+    </div>
+
+    <div class="result-box">
+      <h3>Copy this result for WhatsApp</h3>
+      <div class="summary" id="summary">${summary}</div>
+    </div>
+
+    <div class="buttons">
+      <button class="plain" onclick="restart()">Start again</button>
+      <button class="gold" onclick="copyResult()">Copy result</button>
+    </div>
+  `;
 }
 
-showQuestion("q1");
-</script>
+function restart() {
+  questionNumber = 1;
+  showQuestion("money");
+}
 
+function copyResult() {
+  const text = document.getElementById("summary").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Result copied.");
+}
+
+showQuestion("money");
+</script>
 </body>
 </html>
