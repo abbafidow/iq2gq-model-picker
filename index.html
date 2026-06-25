@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IQ2GQ Betting Model Picker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111827;
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      max-width: 680px;
+      width: 100%;
+      background: #1f2937;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    }
+    h1 { margin-top: 0; color: #fbbf24; }
+    .question { font-size: 1.35rem; margin: 22px 0 8px; font-weight: bold; }
+    .explain { color: #d1d5db; line-height: 1.5; margin-bottom: 20px; }
+    button {
+      width: 48%;
+      padding: 15px;
+      margin: 5px 1%;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .yes { background: #22c55e; color: #111827; }
+    .no { background: #ef4444; color: white; }
+    .reset { width: 100%; background: #fbbf24; color: #111827; margin-top: 20px; }
+    .result { background: #374151; padding: 20px; border-radius: 12px; margin-top: 20px; }
+    .model { font-size: 1.6rem; color: #fbbf24; font-weight: bold; margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>IQ2GQ Betting Model Picker</h1>
+  <p>Answer yes or no. Each question explains what it means.</p>
+  <div id="content"></div>
+</div>
+
+<script>
+const questions = {
+  q1: {
+    text: "Is making the most money the top priority?",
+    explain: "Choose YES if Rule 1 matters most and the model should mainly reward profit. Choose NO if the competition, banter and Presidency race matter just as much.",
+    yes: "q2",
+    no: "q5"
+  },
+  q2: {
+    text: "Should long-term return matter more than one big win?",
+    explain: "Choose YES if you want to reward members who make steady money over time. Choose NO if the member who makes the most total dollars should simply rank highest.",
+    yes: "roi",
+    no: "profit"
+  },
+  q5: {
+    text: "Is the competition more important than profit?",
+    explain: "Choose YES if you mainly want a strong Presidency race and live ladder. Choose NO if you want the model to guide better betting decisions.",
+    yes: "q6",
+    no: "q8"
+  },
+  q6: {
+    text: "Do you prefer a simple system?",
+    explain: "Choose YES if members should understand the ladder quickly. Choose NO if you are open to a smarter system that may need more explanation.",
+    yes: "weighted",
+    no: "q7"
+  },
+  q7: {
+    text: "Should confidence in a pick affect the score?",
+    explain: "Choose YES if members should get more reward for backing strong picks and more punishment when those picks fail. Choose NO if you want a ranking that adjusts based on results and difficulty over time.",
+    yes: "confidence",
+    no: "elo"
+  },
+  q8: {
+    text: "Do you want data and member history to influence picks?",
+    explain: "Choose YES if past performance by sport, option and odds should help shape the weekly multi. Choose NO if you prefer a simple strike-based system.",
+    yes: "ai",
+    no: "survivor"
+  }
+};
+
+const results = {
+  roi: {
+    model: "ROI Model",
+    text: "This ranks members by return on investment. It rewards people who produce the best return for the money placed. It is stronger than total profit because it values consistency, not just one big win."
+  },
+  profit: {
+    model: "Profit Model",
+    text: "This ranks members by total money made. It is simple and clearly linked to Rule 1. The risk is that one lucky high-odds win can outweigh months of steady performance."
+  },
+  weighted: {
+    model: "Current Weighted Points Model",
+    text: "This keeps the current style. Members earn points for wins, MM success, bonuses and penalties. It is familiar and good for competition, but it does not always reward the best money-making picks."
+  },
+  confidence: {
+    model: "Confidence Model",
+    text: "Members rate how confident they are in each pick. High-confidence wins earn more. High-confidence losses hurt more. This rewards conviction but relies on members judging their picks honestly."
+  },
+  elo: {
+    model: "Elo Rating Model",
+    text: "This works like a sports or chess rating. Members gain or lose rating points based on results, form and difficulty. It is good for long-term ranking but takes more explanation."
+  },
+  ai: {
+    model: "AI Performance Model",
+    text: "This uses past data to guide better picks. It can look at each member's history by sport, betting type, odds range and current form. It is the strongest data-led option, but less simple than a normal ladder."
+  },
+  survivor: {
+    model: "Survivor Model",
+    text: "This is a simple pressure model. Wrong picks earn strikes. Too many strikes lead to a stand-down. It is easy to understand, but less useful for identifying the best long-term bettor."
+  }
+};
+
+function showQuestion(id) {
+  const q = questions[id];
+  document.getElementById("content").innerHTML = `
+    <div class="question">${q.text}</div>
+    <div class="explain">${q.explain}</div>
+    <button class="yes" onclick="answer('${q.yes}')">YES</button>
+    <button class="no" onclick="answer('${q.no}')">NO</button>
+  `;
+}
+
+function showResult(id) {
+  const r = results[id];
+  document.getElementById("content").innerHTML = `
+    <div class="result">
+      <div>Your likely preferred model is:</div>
+      <div class="model">${r.model}</div>
+      <p>${r.text}</p>
+      <button class="reset" onclick="restart()">Start again</button>
+    </div>
+  `;
+}
+
+function answer(next) {
+  if (questions[next]) {
+    showQuestion(next);
+  } else {
+    showResult(next);
+  }
+}
+
+function restart() {
+  showQuestion("q1");
+}
+
+showQuestion("q1");
+</script>
+
+</body>
+</html>
