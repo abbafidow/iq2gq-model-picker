@@ -16,6 +16,7 @@
       --line: #334155;
       --green: #22c55e;
       --red: #ef4444;
+      --orange: #fb923c;
     }
 
     * { box-sizing: border-box; }
@@ -29,7 +30,7 @@
       padding: 22px;
     }
 
-    .wrap { max-width: 1040px; margin: 0 auto; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
 
     .card {
       background: linear-gradient(180deg, var(--card), var(--card2));
@@ -51,11 +52,14 @@
     h1 { margin: 0; font-size: 42px; color: var(--gold); }
     h2, h3 { color: var(--gold); margin-top: 0; }
 
-    .subtitle {
+    .subtitle, .explain {
       color: var(--muted);
+      line-height: 1.6;
       font-size: 17px;
-      line-height: 1.5;
-      max-width: 800px;
+    }
+
+    .subtitle {
+      max-width: 820px;
       margin: 12px auto 24px;
     }
 
@@ -86,7 +90,7 @@
       margin: 12px 0 28px;
     }
 
-    .fill, .rank-fill, .profile-fill {
+    .fill {
       height: 100%;
       background: linear-gradient(90deg, var(--gold), #fde68a);
     }
@@ -109,49 +113,50 @@
       line-height: 1.15;
     }
 
-    .explain {
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 17px;
-      margin-bottom: 26px;
-    }
-
-    .buttons, .choice-grid, .podium {
+    .buttons, .choice-grid, .podium, .tile-grid, .blueprint-grid {
       display: grid;
       gap: 16px;
     }
 
     .buttons { grid-template-columns: 1fr 1fr; }
-    .choice-grid { grid-template-columns: repeat(2, 1fr); }
-    .podium { grid-template-columns: repeat(3, 1fr); }
+    .choice-grid, .tile-grid { grid-template-columns: repeat(2, 1fr); }
+    .podium, .blueprint-grid { grid-template-columns: repeat(4, 1fr); }
 
-    button, .choice-card {
-      border: 0;
+    button, .choice-card, .tile, .blueprint-card, .podium-card {
       border-radius: 18px;
       padding: 18px;
-      font-size: 18px;
-      font-weight: 900;
-      cursor: pointer;
       color: white;
     }
 
-    .choice-card {
+    button {
+      border: 0;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .choice-card, .tile, .blueprint-card, .podium-card {
       background: #0f172a;
       border: 1px solid var(--line);
+    }
+
+    .choice-card {
+      cursor: pointer;
       text-align: left;
     }
 
-    .choice-card:hover { border-color: var(--gold); }
+    .choice-card:hover, .tile:hover { border-color: var(--gold); }
 
-    .choice-icon { font-size: 36px; margin-bottom: 10px; }
+    .choice-icon, .tile-icon { font-size: 36px; margin-bottom: 10px; }
 
-    .choice-title {
+    .choice-title, .tile-title {
       font-size: 21px;
       color: var(--gold);
       margin-bottom: 8px;
+      font-weight: 900;
     }
 
-    .choice-text {
+    .choice-text, .tile-text {
       font-size: 15px;
       color: var(--muted);
       line-height: 1.45;
@@ -171,12 +176,12 @@
       opacity: 0.9;
     }
 
-    .result-title {
-      text-align: center;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 18px;
+    .result-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      margin: 18px 0;
     }
 
     .main-result {
@@ -194,76 +199,63 @@
       margin-bottom: 20px;
     }
 
-    .result-box {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 20px;
-      margin: 18px 0;
+    .podium-card {
+      text-align: center;
+      min-height: 120px;
     }
 
-    .rank-list { display: grid; gap: 12px; }
-
-    .rank-item {
-      background: #0f172a;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px;
-      cursor: pointer;
-    }
-
-    .rank-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      font-weight: 900;
+    .podium-card .medal {
+      font-size: 32px;
       margin-bottom: 8px;
     }
 
-    .rank-bar, .profile-bar {
-      height: 10px;
-      background: #1e293b;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .details {
-      display: none;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .details strong { color: white; }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .pill {
-      font-size: 12px;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 5px 9px;
-    }
-
-    .podium-card {
-      background: #0f172a;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
+    .blueprint-card {
       text-align: center;
     }
 
-    .podium-card .icon {
-      font-size: 34px;
+    .blueprint-card .label {
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       margin-bottom: 8px;
+    }
+
+    .blueprint-card .value {
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .gauge-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 16px 0;
+    }
+
+    .gauge {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--gold) var(--score), #1e293b 0);
+    }
+
+    .gauge-inner {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      background: #0f172a;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid var(--line);
+    }
+
+    .gauge-inner strong {
+      color: var(--gold);
+      font-size: 26px;
     }
 
     .profile-row { margin: 14px 0; }
@@ -273,6 +265,55 @@
       justify-content: space-between;
       margin-bottom: 7px;
       font-weight: 900;
+    }
+
+    .profile-track {
+      height: 10px;
+      background: #1e293b;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .profile-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), #fde68a);
+    }
+
+    .traffic {
+      display: grid;
+      gap: 12px;
+    }
+
+    .traffic-item {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: #0f172a;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      cursor: pointer;
+    }
+
+    .traffic-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+
+    .green { background: var(--green); }
+    .yellow { background: var(--gold); }
+    .orange { background: var(--orange); }
+    .red { background: var(--red); }
+
+    .details {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.55;
     }
 
     .summary {
@@ -285,12 +326,22 @@
       font-size: 14px;
     }
 
-    @media (max-width: 750px) {
+    canvas {
+      max-width: 100%;
+      margin: 0 auto;
+      display: block;
+    }
+
+    @media (max-width: 800px) {
       h1 { font-size: 30px; }
       .question { font-size: 25px; }
-      .buttons, .choice-grid, .podium { grid-template-columns: 1fr; }
+      .buttons, .choice-grid, .tile-grid, .podium, .blueprint-grid {
+        grid-template-columns: 1fr;
+      }
       .main-result { font-size: 27px; }
       .logo { width: 95px; height: 95px; }
+      .traffic-item { grid-template-columns: 30px 1fr; }
+      .traffic-item .score-small { grid-column: 2; }
     }
   </style>
 </head>
@@ -302,249 +353,61 @@
 
 <script>
 const competitionFormats = {
-  team: {
-    icon: "👥",
-    name: "Team Multi Competition",
-    short: "Teams of 3-4. Every pick must win for the team multi to pay out.",
-    detail: "Best for camaraderie, banter, shared wins, shared blame and the current IQ2GQ feel."
-  },
-  individual: {
-    icon: "👤",
-    name: "Individual Competition",
-    short: "Every member competes on their own performance.",
-    detail: "Best for profit models, ROI and identifying the strongest bettor without relying on teammates."
-  },
-  matchplay: {
-    icon: "⛳",
-    name: "Match Play Competition",
-    short: "Members face weekly head-to-head match ups.",
-    detail: "Best for rivalry, weekly drama and a Ryder Cup style season narrative."
-  },
-  hybrid: {
-    icon: "⚖️",
-    name: "Hybrid Competition",
-    short: "One pick contributes to individual, team and syndicate outcomes.",
-    detail: "Best if IQ2GQ wants to preserve the social competition while adding smarter data-led betting."
-  }
+  team: { icon: "👥", name: "Team Multi Competition", detail: "Teams of 3-4. Every pick must win for the team multi to pay out." },
+  individual: { icon: "👤", name: "Individual Competition", detail: "Every member competes on their own performance." },
+  matchplay: { icon: "⛳", name: "Match Play Competition", detail: "Members face weekly head-to-head match ups." },
+  hybrid: { icon: "⚖️", name: "Hybrid Competition", detail: "One pick contributes to individual, team and syndicate outcomes." }
 };
 
 const scoringSystems = {
-  weighted: {
-    icon: "🏆",
-    name: "Current Weighted Points",
-    detail: "Keeps win points, loss points, MM points, bonus points and penalties.",
-    scores: { money: 55, consistency: 70, competition: 96, simple: 86, confidence: 45, data: 40, process: 40, accountability: 65 }
-  },
-  profit: {
-    icon: "💰",
-    name: "Profit Model",
-    detail: "Ranks members by total money made.",
-    scores: { money: 98, consistency: 40, competition: 45, simple: 85, confidence: 55, data: 50, process: 35, accountability: 70 }
-  },
-  roi: {
-    icon: "📈",
-    name: "ROI Model",
-    detail: "Ranks members by return on investment.",
-    scores: { money: 92, consistency: 96, competition: 50, simple: 65, confidence: 45, data: 80, process: 75, accountability: 80 }
-  },
-  confidence: {
-    icon: "🔥",
-    name: "Confidence Model",
-    detail: "Members rate confidence. Strong wins help more and strong failures hurt more.",
-    scores: { money: 65, consistency: 60, competition: 82, simple: 55, confidence: 98, data: 55, process: 65, accountability: 85 }
-  },
-  elo: {
-    icon: "♟️",
-    name: "Elo Rating Model",
-    detail: "A live rating system based on form, difficulty and results.",
-    scores: { money: 65, consistency: 85, competition: 82, simple: 45, confidence: 60, data: 78, process: 70, accountability: 75 }
-  },
-  performanceIndex: {
-    icon: "⭐",
-    name: "Performance Index",
-    detail: "Combines success rate, ROI, profit, MM contribution, form and risk.",
-    scores: { money: 82, consistency: 92, competition: 75, simple: 40, confidence: 60, data: 88, process: 85, accountability: 88 }
-  }
+  weighted: { icon: "🏆", name: "Current Weighted Points", detail: "Keeps win points, loss points, MM points, bonus points and penalties.", scores: { money: 55, consistency: 70, competition: 96, simple: 86, confidence: 45, data: 40, process: 40, accountability: 65 } },
+  profit: { icon: "💰", name: "Profit Model", detail: "Ranks members by total money made.", scores: { money: 98, consistency: 40, competition: 45, simple: 85, confidence: 55, data: 50, process: 35, accountability: 70 } },
+  roi: { icon: "📈", name: "ROI Model", detail: "Ranks members by return on investment.", scores: { money: 92, consistency: 96, competition: 50, simple: 65, confidence: 45, data: 80, process: 75, accountability: 80 } },
+  confidence: { icon: "🔥", name: "Confidence Model", detail: "Members rate confidence. Strong wins help more and strong failures hurt more.", scores: { money: 65, consistency: 60, competition: 82, simple: 55, confidence: 98, data: 55, process: 65, accountability: 85 } },
+  elo: { icon: "♟️", name: "Elo Rating Model", detail: "A live rating system based on form, difficulty and results.", scores: { money: 65, consistency: 85, competition: 82, simple: 45, confidence: 60, data: 78, process: 70, accountability: 75 } },
+  performanceIndex: { icon: "⭐", name: "Performance Index", detail: "Combines success rate, ROI, profit, MM contribution, form and risk.", scores: { money: 82, consistency: 92, competition: 75, simple: 40, confidence: 60, data: 88, process: 85, accountability: 88 } }
 };
 
 const betMethods = {
-  equal: {
-    icon: "⚖️",
-    name: "Equal Weighting",
-    detail: "All members submit one pick. Every pick carries the same weight.",
-    scores: { equalInfluence: 100, data: 30, specialist: 20, simple: 95, consensus: 60 }
-  },
-  smallGroup: {
-    icon: "👥",
-    name: "Small Group Rotation",
-    detail: "Small groups of 3-4 members build the official syndicate bet each week.",
-    scores: { equalInfluence: 70, data: 35, specialist: 35, simple: 75, consensus: 65 }
-  },
-  bestBettor: {
-    icon: "👑",
-    name: "Best Bettor Led",
-    detail: "The strongest current or historical bettor has more influence over the official syndicate bet.",
-    scores: { equalInfluence: 10, data: 75, specialist: 60, simple: 55, consensus: 30 }
-  },
-  specialist: {
-    icon: "🎯",
-    name: "Sport Specialist",
-    detail: "Members with the strongest record in a sport or bet type carry more influence for that area.",
-    scores: { equalInfluence: 15, data: 90, specialist: 100, simple: 45, consensus: 45 }
-  },
-  consensus: {
-    icon: "🤝",
-    name: "Consensus",
-    detail: "The official bet comes from the strongest area of agreement across members.",
-    scores: { equalInfluence: 75, data: 55, specialist: 50, simple: 70, consensus: 100 }
-  },
-  ai: {
-    icon: "🤖",
-    name: "AI Assisted",
-    detail: "AI reviews all member picks, past performance, odds, sport and market type before recommending the strongest syndicate bet.",
-    scores: { equalInfluence: 20, data: 100, specialist: 85, simple: 25, consensus: 65 }
-  }
+  equal: { icon: "⚖️", name: "Equal Weighting", detail: "All members submit one pick. Every pick carries the same weight.", scores: { equalInfluence: 100, data: 30, specialist: 20, simple: 95, consensus: 60 } },
+  smallGroup: { icon: "👥", name: "Small Group Rotation", detail: "Small groups of 3-4 members build the official syndicate bet each week.", scores: { equalInfluence: 70, data: 35, specialist: 35, simple: 75, consensus: 65 } },
+  bestBettor: { icon: "👑", name: "Best Bettor Led", detail: "The strongest current or historical bettor has more influence over the official syndicate bet.", scores: { equalInfluence: 10, data: 75, specialist: 60, simple: 55, consensus: 30 } },
+  specialist: { icon: "🎯", name: "Sport Specialist", detail: "Members with the strongest record in a sport or bet type carry more influence for that area.", scores: { equalInfluence: 15, data: 90, specialist: 100, simple: 45, consensus: 45 } },
+  consensus: { icon: "🤝", name: "Consensus", detail: "The official bet comes from the strongest area of agreement across members.", scores: { equalInfluence: 75, data: 55, specialist: 50, simple: 70, consensus: 100 } },
+  ai: { icon: "🤖", name: "AI Assisted", detail: "AI reviews all member picks, past performance, odds, sport and market type before recommending the strongest syndicate bet.", scores: { equalInfluence: 20, data: 100, specialist: 85, simple: 25, consensus: 65 } }
 };
 
 const governanceRules = {
-  noConsequence: {
-    icon: "🟢",
-    name: "No Consequence",
-    detail: "Members keep contributing regardless of form.",
-    scores: { accountability: 10, simple: 80, equalInfluence: 90 }
-  },
-  strikes: {
-    icon: "⚠️",
-    name: "Strike System",
-    detail: "Repeated failed weeks create strikes.",
-    scores: { accountability: 75, simple: 85, equalInfluence: 75 }
-  },
-  standdown: {
-    icon: "🛑",
-    name: "Stand-down",
-    detail: "Repeated failed weeks trigger a temporary stand-down.",
-    scores: { accountability: 95, simple: 80, equalInfluence: 55 }
-  },
-  reducedInfluence: {
-    icon: "📉",
-    name: "Reduced Influence",
-    detail: "Repeated poor performance reduces influence over the syndicate bet.",
-    scores: { accountability: 90, simple: 45, equalInfluence: 20 }
-  },
-  captainOverride: {
-    icon: "🧭",
-    name: "Captain Override",
-    detail: "A captain or performance lead can veto high-risk or weak picks.",
-    scores: { accountability: 85, simple: 55, equalInfluence: 25 }
-  }
+  noConsequence: { icon: "🟢", name: "No Consequence", detail: "Members keep contributing regardless of form.", colour: "green", scores: { accountability: 10, simple: 80, equalInfluence: 90 } },
+  strikes: { icon: "🟡", name: "Strike System", detail: "Repeated failed weeks create strikes.", colour: "yellow", scores: { accountability: 75, simple: 85, equalInfluence: 75 } },
+  reducedInfluence: { icon: "🟠", name: "Reduced Influence", detail: "Repeated poor performance reduces influence over the syndicate bet.", colour: "orange", scores: { accountability: 90, simple: 45, equalInfluence: 20 } },
+  standdown: { icon: "🔴", name: "Stand-down", detail: "Repeated failed weeks trigger a temporary stand-down.", colour: "red", scores: { accountability: 95, simple: 80, equalInfluence: 55 } }
 };
 
 const questions = [
-  {
-    id: "money",
-    text: "Should Rule #1 be the main priority?",
-    explain: "Choose YES if the system should mainly reward profit. Choose NO if the Presidency race, banter and competition matter just as much.",
-    yes: "consistency", no: "competition", axis: "money",
-    yesText: "YES", yesSmall: "Money first", noText: "NO", noSmall: "Competition matters too"
-  },
-  {
-    id: "consistency",
-    text: "Should steady return matter more than one big win?",
-    explain: "Choose YES if consistent returns should be rewarded. Choose NO if total dollars should rank highest.",
-    yes: "process", no: "wildcard", axis: "consistency",
-    yesText: "YES", yesSmall: "Reward consistency", noText: "NO", noSmall: "Total dollars wins"
-  },
-  {
-    id: "competition",
-    text: "Should the Presidency race stay central?",
-    explain: "Choose YES if the model should still feel like a season-long competition. Choose NO if the model should mainly help choose better bets.",
-    yes: "simplicity", no: "data", axis: "competition",
-    yesText: "YES", yesSmall: "Keep the race alive", noText: "NO", noSmall: "Focus on better bets"
-  },
-  {
-    id: "simplicity",
-    text: "Should the system stay easy to understand?",
-    explain: "Choose YES if members should understand the rules quickly. Choose NO if you are open to a smarter system that needs more explanation.",
-    yes: "equalInfluence", no: "confidence", axis: "simple",
-    yesText: "YES", yesSmall: "Keep it simple", noText: "NO", noSmall: "Smarter is fine"
-  },
-  {
-    id: "confidence",
-    text: "Should confidence affect the score?",
-    explain: "Choose YES if strong picks should earn more and failed confident picks should hurt more.",
-    yes: "equalInfluence", no: "data", axis: "confidence",
-    yesText: "YES", yesSmall: "Conviction should count", noText: "NO", noSmall: "Keep scoring cleaner"
-  },
-  {
-    id: "data",
-    text: "Should past data guide weekly bets?",
-    explain: "Choose YES if member history by sport, betting type, odds and form should influence the official syndicate bet.",
-    yes: "specialist", no: "accountability", axis: "data",
-    yesText: "YES", yesSmall: "Use the data", noText: "NO", noSmall: "Keep it simple"
-  },
-  {
-    id: "process",
-    text: "Should good betting decisions be recognised even when they lose?",
-    explain: "Choose YES if process matters. Choose NO if only winning bets should count.",
-    yes: "equalInfluence", no: "wildcard", axis: "process",
-    yesText: "YES", yesSmall: "Reward good process", noText: "NO", noSmall: "Only wins count"
-  },
-  {
-    id: "equalInfluence",
-    text: "Should every member have equal influence over the syndicate bet?",
-    explain: "Choose YES if every member should carry the same weight. Choose NO if better performers should carry more influence.",
-    yes: "consensus", no: "specialist", axis: "equalInfluence",
-    yesText: "YES", yesSmall: "Equal weight", noText: "NO", noSmall: "Performance should matter"
-  },
-  {
-    id: "specialist",
-    text: "Should sport specialists carry more influence?",
-    explain: "Choose YES if members with strong records in NRL, NFL, Rugby or other sports should carry more weight for those bets.",
-    yes: "innovation", no: "consensus", axis: "specialist",
-    yesText: "YES", yesSmall: "Use experts", noText: "NO", noSmall: "Avoid specialists"
-  },
-  {
-    id: "consensus",
-    text: "Should the official bet come from group agreement?",
-    explain: "Choose YES if consensus should matter. Choose NO if individual or specialist performance should matter more.",
-    yes: "accountability", no: "innovation", axis: "consensus",
-    yesText: "YES", yesSmall: "Consensus matters", noText: "NO", noSmall: "Performance matters more"
-  },
-  {
-    id: "innovation",
-    text: "Should the system improve as more data becomes available?",
-    explain: "Choose YES if AI and updated performance data should improve the system over time.",
-    yes: "accountability", no: "wildcard", axis: "innovation",
-    yesText: "YES", yesSmall: "Let it evolve", noText: "NO", noSmall: "Keep rules fixed"
-  },
-  {
-    id: "accountability",
-    text: "Should repeated failed weeks reduce a member's role?",
-    explain: "Choose YES if repeated crashes should trigger consequences. Choose NO if everyone should keep contributing regardless of form.",
-    yes: "wildcard", no: "wildcard", axis: "accountability",
-    yesText: "YES", yesSmall: "Consequences matter", noText: "NO", noSmall: "Keep everyone involved"
-  }
+  { id: "money", text: "Should Rule #1 be the main priority?", explain: "Choose YES if the system should mainly reward profit. Choose NO if the Presidency race, banter and competition matter just as much.", yes: "consistency", no: "competition", axis: "money", yesText: "YES", yesSmall: "Money first", noText: "NO", noSmall: "Competition matters too" },
+  { id: "consistency", text: "Should steady return matter more than one big win?", explain: "Choose YES if consistent returns should be rewarded. Choose NO if total dollars should rank highest.", yes: "process", no: "wildcard", axis: "consistency", yesText: "YES", yesSmall: "Reward consistency", noText: "NO", noSmall: "Total dollars wins" },
+  { id: "competition", text: "Should the Presidency race stay central?", explain: "Choose YES if the model should still feel like a season-long competition. Choose NO if the model should mainly help choose better bets.", yes: "simplicity", no: "data", axis: "competition", yesText: "YES", yesSmall: "Keep the race alive", noText: "NO", noSmall: "Focus on better bets" },
+  { id: "simplicity", text: "Should the system stay easy to understand?", explain: "Choose YES if members should understand the rules quickly. Choose NO if you are open to a smarter system.", yes: "equalInfluence", no: "confidence", axis: "simple", yesText: "YES", yesSmall: "Keep it simple", noText: "NO", noSmall: "Smarter is fine" },
+  { id: "confidence", text: "Should confidence affect the score?", explain: "Choose YES if strong picks should earn more and failed confident picks should hurt more.", yes: "equalInfluence", no: "data", axis: "confidence", yesText: "YES", yesSmall: "Conviction should count", noText: "NO", noSmall: "Keep scoring cleaner" },
+  { id: "data", text: "Should past data guide weekly bets?", explain: "Choose YES if member history by sport, betting type, odds and form should influence the official syndicate bet.", yes: "specialist", no: "accountability", axis: "data", yesText: "YES", yesSmall: "Use the data", noText: "NO", noSmall: "Keep it simple" },
+  { id: "process", text: "Should good betting decisions be recognised even when they lose?", explain: "Choose YES if process matters. Choose NO if only winning bets should count.", yes: "equalInfluence", no: "wildcard", axis: "process", yesText: "YES", yesSmall: "Reward process", noText: "NO", noSmall: "Only wins count" },
+  { id: "equalInfluence", text: "Should every member have equal influence over the syndicate bet?", explain: "Choose YES if every member should carry the same weight. Choose NO if better performers should carry more influence.", yes: "consensus", no: "specialist", axis: "equalInfluence", yesText: "YES", yesSmall: "Equal weight", noText: "NO", noSmall: "Performance should matter" },
+  { id: "specialist", text: "Should sport specialists carry more influence?", explain: "Choose YES if members with strong records in certain sports should carry more weight for those bets.", yes: "innovation", no: "consensus", axis: "specialist", yesText: "YES", yesSmall: "Use experts", noText: "NO", noSmall: "Avoid specialists" },
+  { id: "consensus", text: "Should the official bet come from group agreement?", explain: "Choose YES if consensus should matter. Choose NO if individual or specialist performance should matter more.", yes: "accountability", no: "innovation", axis: "consensus", yesText: "YES", yesSmall: "Consensus matters", noText: "NO", noSmall: "Performance matters" },
+  { id: "innovation", text: "Should the system improve as more data becomes available?", explain: "Choose YES if AI and updated performance data should improve the system over time.", yes: "accountability", no: "wildcard", axis: "innovation", yesText: "YES", yesSmall: "Let it evolve", noText: "NO", noSmall: "Keep rules fixed" },
+  { id: "accountability", text: "Should repeated failed weeks reduce a member's role?", explain: "Choose YES if repeated crashes should trigger consequences. Choose NO if everyone should keep contributing regardless of form.", yes: "wildcard", no: "wildcard", axis: "accountability", yesText: "YES", yesSmall: "Consequences matter", noText: "NO", noSmall: "Keep everyone involved" }
 ];
+
+const defaultPrefs = {
+  money: 50, consistency: 50, competition: 50, simple: 50,
+  confidence: 50, data: 50, process: 50, equalInfluence: 50,
+  specialist: 50, consensus: 50, innovation: 50, accountability: 50
+};
 
 let selectedFormat = null;
 let questionNumber = 1;
-
 let userPrefs = {};
-
-const defaultPrefs = {
-  money: 50,
-  consistency: 50,
-  competition: 50,
-  simple: 50,
-  confidence: 50,
-  data: 50,
-  process: 50,
-  equalInfluence: 50,
-  specialist: 50,
-  consensus: 50,
-  innovation: 50,
-  accountability: 50
-};
 
 function intro() {
   document.getElementById("content").innerHTML = `
@@ -553,7 +416,7 @@ function intro() {
       <h1>IQ2GQ 2027 Competition Designer</h1>
       <p class="subtitle">Designing the next chapter of the Syndicate. This tool separates four choices: competition format, scoring system, syndicate bet method and governance rules.</p>
       <div class="rule">Where Intellect Meets Style - Est. 2011</div>
-      <p class="subtitle">This is not a binding vote. It is designed to support a clearer AGM discussion.</p>
+      <p class="subtitle">This is not a binding vote. It supports a clearer AGM discussion.</p>
       <button class="goldBtn" onclick="chooseCompetitionFormat()">Start assessment</button>
     </div>
   `;
@@ -566,7 +429,7 @@ function chooseCompetitionFormat() {
       <div class="choice-card" onclick="selectCompetitionFormat('${id}')">
         <div class="choice-icon">${f.icon}</div>
         <div class="choice-title">${f.name}</div>
-        <div class="choice-text">${f.short}<br><br>${f.detail}</div>
+        <div class="choice-text">${f.detail}</div>
       </div>
     `;
   }).join("");
@@ -588,18 +451,15 @@ function selectCompetitionFormat(id) {
     userPrefs.competition = 85;
     userPrefs.equalInfluence = 80;
   }
-
   if (id === "individual") {
     userPrefs.money = 85;
     userPrefs.competition = 45;
   }
-
   if (id === "matchplay") {
     userPrefs.competition = 95;
     userPrefs.accountability = 85;
     userPrefs.simple = 75;
   }
-
   if (id === "hybrid") {
     userPrefs.money = 80;
     userPrefs.competition = 80;
@@ -633,7 +493,6 @@ function showQuestion(id) {
 
 function answer(next, axis, value) {
   userPrefs[axis] = value;
-
   if (next === "wildcard") {
     showWildcard();
   } else {
@@ -680,18 +539,15 @@ function wildcard(choice) {
     userPrefs.consistency = 100;
     userPrefs.money = Math.max(userPrefs.money, 65);
   }
-
   if (choice === "b") {
     userPrefs.money = 100;
     userPrefs.consistency = Math.min(userPrefs.consistency, 45);
   }
-
   if (choice === "neither") {
     userPrefs.data = 90;
     userPrefs.process = 90;
     userPrefs.innovation = 85;
   }
-
   showResult();
 }
 
@@ -709,54 +565,14 @@ function rankItems(items, axes) {
 
 function rankCompetitionFormats() {
   const formatScores = {
-    team: {
-      scores: {
-        competition: 90,
-        simple: 75,
-        equalInfluence: 85,
-        consensus: 70,
-        data: 40,
-        accountability: 65
-      }
-    },
-    individual: {
-      scores: {
-        competition: 45,
-        simple: 80,
-        equalInfluence: 60,
-        consensus: 30,
-        data: 65,
-        accountability: 75
-      }
-    },
-    matchplay: {
-      scores: {
-        competition: 98,
-        simple: 75,
-        equalInfluence: 70,
-        consensus: 40,
-        data: 55,
-        accountability: 90
-      }
-    },
-    hybrid: {
-      scores: {
-        competition: 85,
-        simple: 45,
-        equalInfluence: 55,
-        consensus: 65,
-        data: 90,
-        accountability: 80
-      }
-    }
+    team: { scores: { competition: 90, simple: 75, equalInfluence: 85, consensus: 70, data: 40, accountability: 65 } },
+    individual: { scores: { competition: 45, simple: 80, equalInfluence: 60, consensus: 30, data: 65, accountability: 75 } },
+    matchplay: { scores: { competition: 98, simple: 75, equalInfluence: 70, consensus: 40, data: 55, accountability: 90 } },
+    hybrid: { scores: { competition: 85, simple: 45, equalInfluence: 55, consensus: 65, data: 90, accountability: 80 } }
   };
 
   return Object.keys(competitionFormats)
-    .map(id => ({
-      id,
-      ...competitionFormats[id],
-      match: matchAgainst(formatScores[id], ["competition", "simple", "equalInfluence", "consensus", "data", "accountability"])
-    }))
+    .map(id => ({ id, ...competitionFormats[id], match: matchAgainst(formatScores[id], ["competition", "simple", "equalInfluence", "consensus", "data", "accountability"]) }))
     .sort((a, b) => b.match - a.match);
 }
 
@@ -785,14 +601,9 @@ function showResult() {
   const profileHtml = Object.keys(profile).map(key => `
     <div class="profile-row">
       <div class="profile-head"><span>${key}</span><span>${profile[key]}%</span></div>
-      <div class="profile-bar"><div class="profile-fill" style="width:${profile[key]}%"></div></div>
+      <div class="profile-track"><div class="profile-fill" style="width:${profile[key]}%"></div></div>
     </div>
   `).join("");
-
-  const formatHtml = makeRankList(formatRank);
-  const scoringHtml = makeRankList(scoringRank);
-  const betHtml = makeRankList(betRank);
-  const governanceHtml = makeRankList(governanceRank);
 
   const summary = `IQ2GQ 2027 Competition Designer
 
@@ -811,58 +622,88 @@ Decide the format first, then the scoring system, then how the official syndicat
     </div>
     <div class="bar"><div class="fill" style="width:100%"></div></div>
 
-    <div class="result-title">Your IQ2GQ design</div>
-
-    <div class="main-result">${topFormat.icon} ${topFormat.name}</div>
-    <div class="score">Competition Format - ${topFormat.match}% match</div>
-
-    <div class="main-result">${topScoring.icon} ${topScoring.name}</div>
-    <div class="score">Scoring System - ${topScoring.match}% match</div>
-
-    <div class="main-result">${topBet.icon} ${topBet.name}</div>
-    <div class="score">Syndicate Bet Method - ${topBet.match}% match</div>
-
-    <div class="main-result">${topGovernance.icon} ${topGovernance.name}</div>
-    <div class="score">Governance Rule - ${topGovernance.match}% match</div>
-
-    <div class="podium">
-      <div class="podium-card"><div class="icon">1</div><strong>Format</strong><br>${topFormat.name}</div>
-      <div class="podium-card"><div class="icon">2</div><strong>Scoring</strong><br>${topScoring.name}</div>
-      <div class="podium-card"><div class="icon">3</div><strong>Bet Method</strong><br>${topBet.name}</div>
+    <div class="centre">
+      <h1>Your IQ2GQ Design</h1>
+      <p class="subtitle">A suggested design based on your answers. Use this to guide discussion, not as a binding vote.</p>
     </div>
 
     <div class="result-box">
-      <h2>Betting philosophy profile</h2>
+      <h2>Blueprint Summary</h2>
+      <div class="blueprint-grid">
+        <div class="blueprint-card">
+          <div class="label">Competition</div>
+          <div class="value">${topFormat.icon}<br>${topFormat.name}</div>
+        </div>
+        <div class="blueprint-card">
+          <div class="label">Scoring</div>
+          <div class="value">${topScoring.icon}<br>${topScoring.name}</div>
+        </div>
+        <div class="blueprint-card">
+          <div class="label">Bet Method</div>
+          <div class="value">${topBet.icon}<br>${topBet.name}</div>
+        </div>
+        <div class="blueprint-card">
+          <div class="label">Governance</div>
+          <div class="value">${topGovernance.icon}<br>${topGovernance.name}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-box">
+      <h2>Overall Fit</h2>
+      <div class="gauge-wrap">
+        <div class="gauge" style="--score:${topScoring.match}%">
+          <div class="gauge-inner">
+            <div><strong>${topScoring.match}%</strong><br>Scoring fit</div>
+          </div>
+        </div>
+      </div>
+      <p class="centre subtitle">Your strongest scoring system match is ${topScoring.name}.</p>
+    </div>
+
+    <div class="result-box">
+      <h2>Top Recommendations</h2>
+      <div class="podium">
+        <div class="podium-card"><div class="medal">1</div><strong>Format</strong><br>${topFormat.name}<br>${topFormat.match}%</div>
+        <div class="podium-card"><div class="medal">2</div><strong>Scoring</strong><br>${topScoring.name}<br>${topScoring.match}%</div>
+        <div class="podium-card"><div class="medal">3</div><strong>Bet Method</strong><br>${topBet.name}<br>${topBet.match}%</div>
+        <div class="podium-card"><div class="medal">4</div><strong>Governance</strong><br>${topGovernance.name}<br>${topGovernance.match}%</div>
+      </div>
+    </div>
+
+    <div class="result-box">
+      <h2>Betting Philosophy Radar</h2>
+      <canvas id="radar" width="520" height="420"></canvas>
+    </div>
+
+    <div class="result-box">
+      <h2>Betting Philosophy Profile</h2>
       ${profileHtml}
     </div>
 
     <div class="result-box">
-      <h2>Competition Format rankings</h2>
-      <p class="explain">This compares your answers against the four competition formats. Your first choice was also considered, but your answers may point to a different format.</p>
-      <div class="rank-list">${formatHtml}</div>
+      <h2>Competition Format Tiles</h2>
+      <div class="tile-grid">${makeTiles(formatRank)}</div>
     </div>
 
     <div class="result-box">
-      <h2>Scoring System rankings</h2>
-      <p class="explain">This shows how members should be ranked or how the President could be determined.</p>
-      <div class="rank-list">${scoringHtml}</div>
+      <h2>Scoring System Tiles</h2>
+      <div class="tile-grid">${makeTiles(scoringRank)}</div>
     </div>
 
     <div class="result-box">
-      <h2>Syndicate Bet Method rankings</h2>
-      <p class="explain">This shows how the official IQ2GQ syndicate bet could be built from members' picks.</p>
-      <div class="rank-list">${betHtml}</div>
+      <h2>Syndicate Bet Method Matrix</h2>
+      <div class="tile-grid">${makeTiles(betRank)}</div>
     </div>
 
     <div class="result-box">
-      <h2>Governance Rule rankings</h2>
-      <p class="explain">This shows how repeated poor performance or high-risk behaviour could be managed.</p>
-      <div class="rank-list">${governanceHtml}</div>
+      <h2>Governance Traffic Lights</h2>
+      <div class="traffic">${makeTraffic(governanceRank)}</div>
     </div>
 
     <div class="result-box">
       <h2>AGM-style recommendation</h2>
-      <p>Discuss these choices separately. The syndicate does not need to adopt one bundled model. It can choose one Competition Format, one Scoring System, one Syndicate Bet Method and one Governance Rule.</p>
+      <p>Discuss these choices separately. The syndicate can choose one Competition Format, one Scoring System, one Syndicate Bet Method and one Governance Rule.</p>
       <p>Based on your answers, your strongest design is: <strong>${topFormat.name}</strong> with <strong>${topScoring.name}</strong>, using <strong>${topBet.name}</strong>, supported by <strong>${topGovernance.name}</strong>.</p>
     </div>
 
@@ -876,25 +717,103 @@ Decide the format first, then the scoring system, then how the official syndicat
       <button class="goldBtn" onclick="copyResult()">Copy result</button>
     </div>
   `;
+
+  drawRadar();
 }
 
-function makeRankList(items) {
+function makeTiles(items) {
   return items.map((m, i) => `
-    <div class="rank-item" onclick="toggleDetails('${m.id}')">
-      <div class="rank-head">
-        <span>${i + 1}. ${m.icon} ${m.name}</span>
-        <span>${m.match}%</span>
-      </div>
-      <div class="rank-bar"><div class="rank-fill" style="width:${m.match}%"></div></div>
-      <div class="details" id="details-${m.id}">
-        <p><strong>What it is:</strong> ${m.detail}</p>
+    <div class="tile" onclick="toggleDetails('tile-${m.id}-${i}')">
+      <div class="tile-icon">${m.icon}</div>
+      <div class="tile-title">${i + 1}. ${m.name}</div>
+      <div class="tile-text">${m.match}% match<br><br>${m.detail}</div>
+      <div class="details" id="tile-${m.id}-${i}">
+        <strong>Why this appears here:</strong> This option aligns with your answers across the relevant design questions.
       </div>
     </div>
   `).join("");
 }
 
+function makeTraffic(items) {
+  return items.map((m, i) => `
+    <div class="traffic-item" onclick="toggleDetails('traffic-${m.id}-${i}')">
+      <div class="traffic-dot ${m.colour || 'yellow'}"></div>
+      <div><strong>${m.name}</strong><br><span class="tile-text">${m.detail}</span>
+        <div class="details" id="traffic-${m.id}-${i}">Match: ${m.match}%. This reflects your appetite for accountability, simplicity and equal influence.</div>
+      </div>
+      <div class="score-small">${m.match}%</div>
+    </div>
+  `).join("");
+}
+
+function drawRadar() {
+  const canvas = document.getElementById("radar");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  const axes = ["money", "competition", "data", "simple", "accountability"];
+  const labels = ["Profit", "Competition", "Data", "Simplicity", "Accountability"];
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2 + 10;
+  const radius = 145;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "#334155";
+  ctx.fillStyle = "#cbd5e1";
+  ctx.lineWidth = 1;
+  ctx.font = "14px Arial";
+
+  for (let ring = 1; ring <= 5; ring++) {
+    ctx.beginPath();
+    axes.forEach((axis, i) => {
+      const angle = -Math.PI / 2 + (i * 2 * Math.PI / axes.length);
+      const r = radius * ring / 5;
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  axes.forEach((axis, i) => {
+    const angle = -Math.PI / 2 + (i * 2 * Math.PI / axes.length);
+    const x = cx + Math.cos(angle) * (radius + 45);
+    const y = cy + Math.sin(angle) * (radius + 45);
+    ctx.fillText(labels[i], x - 38, y);
+  });
+
+  drawShape(axes.map(a => userPrefs[a]), "rgba(251,191,36,0.35)", "#fbbf24");
+}
+
+function drawShape(values, fill, stroke) {
+  const canvas = document.getElementById("radar");
+  const ctx = canvas.getContext("2d");
+  const axes = values.length;
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2 + 10;
+  const radius = 145;
+
+  ctx.beginPath();
+  values.forEach((value, i) => {
+    const angle = -Math.PI / 2 + (i * 2 * Math.PI / axes);
+    const r = radius * value / 100;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = 3;
+  ctx.stroke();
+}
+
 function toggleDetails(id) {
-  const el = document.getElementById(`details-${id}`);
+  const el = document.getElementById(id);
   if (!el) return;
   el.style.display = el.style.display === "block" ? "none" : "block";
 }
