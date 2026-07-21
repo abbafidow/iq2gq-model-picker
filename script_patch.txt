@@ -1,0 +1,20 @@
+Stage 0 Patch
+
+Replace the current Stage 0 with the new flow discussed:
+
+1. Betting Model
+- Since 2012...
+- 1-7 desired level of change
+
+2. Betting Ideas
+- Multi-select (max 3)
+
+3. Presidency
+- Keep current? Yes/No
+
+4. If No
+- Multi-select future presidency options
+
+5. Continue into existing Competition Builder unchanged.
+
+Also update the results summary and copy-to-clipboard output.
