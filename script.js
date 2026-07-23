@@ -98,10 +98,10 @@ function showStage0PresidencyDirection() {
     <div class="question">Presidency Model Direction</div>
     <div class="explain">Which configuration layer best captures your long-term developmental outlook?</div>
     <div class="choice-grid">
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep current model')"><div class="choice-title">Keep current model</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep Finals Series but improve scoring')"><div class="choice-title">Keep Finals Series but improve scoring</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep scoring but remove Finals Series')"><div class="choice-title">Keep scoring but remove Finals Series</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Time for a completely new Presidency model')"><div class="choice-title">Time for a completely new Presidency model</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep Status Quo')"><div class="choice-title">Keep current model</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep Finals Series')"><div class="choice-title">Keep Finals Series but improve scoring</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep Regular Season scoring')"><div class="choice-title">Keep scoring but remove Finals Series</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('Complete change')"><div class="choice-title">Time for a completely new Presidency model</div></div>
     </div>
   `;
 }
