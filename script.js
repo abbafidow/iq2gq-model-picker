@@ -33,7 +33,7 @@ function showStage0BettingRating() {
   document.getElementById("content").innerHTML = `
     <div class="stage">STAGE 0 - CURRENT SYSTEM REVIEW (1/4)</div>
     <div class="question">The IQ2GQ Betting Model</div>
-    <div class="explain">Since IQ2GQ began, members have submitted one weekly pick which is used to create Mega Multis (MMs), with occasional Group Bets (GBs). While many enhancements have been introduced over the years, the underlying betting model has remained largely unchanged.<br><br><strong>Overall, how well has this betting model served IQ2GQ?</strong></div>
+    <div class="explain">Since IQ2GQ began, we bet by everyone submitting 1 pick per week. We have always used a group of picks (3-6) to make and drop MMs. This betting model has remained largely unchanged.<br><br><strong>Overall, does this betting model still suit our needs?</strong></div>
     <div class="choice-grid">
       <div class="choice-card" onclick="saveStage0BettingRating('1 - Complete redesign')"><div class="choice-title">1</div><div class="choice-text">Complete redesign</div></div>
       <div class="choice-card" onclick="saveStage0BettingRating('2 - Major improvements')"><div class="choice-title">2</div><div class="choice-text">Major improvements</div></div>
@@ -42,25 +42,6 @@ function showStage0BettingRating() {
       <div class="choice-card" onclick="saveStage0BettingRating('5 - Mostly successful')"><div class="choice-title">5</div><div class="choice-text">Mostly successful</div></div>
       <div class="choice-card" onclick="saveStage0BettingRating('6 - Very successful')"><div class="choice-title">6</div><div class="choice-text">Very successful</div></div>
       <div class="choice-card" onclick="saveStage0BettingRating('7 - Keep the core model')"><div class="choice-title">7</div><div class="choice-text">Keep the core model</div></div>
-    </div>
-  `;
-}
-
-function saveStage0BettingRating(val) {
-  stage0Data.bettingRating = val;
-  showStage0BettingDirection();
-}
-
-function showStage0BettingDirection() {
-  document.getElementById("content").innerHTML = `
-    <div class="stage">STAGE 0 - CURRENT SYSTEM REVIEW (2/4)</div>
-    <div class="question">Betting Model Direction</div>
-    <div class="explain">Which statement best reflects your view on our strategic betting deployment?</div>
-    <div class="choice-grid">
-      <div class="choice-card" onclick="saveStage0BettingDirection('Keep largely unchanged')"><div class="choice-title">Keep largely unchanged</div></div>
-      <div class="choice-card" onclick="saveStage0BettingDirection('Keep the core but improve selected areas')"><div class="choice-title">Keep the core but improve selected areas</div></div>
-      <div class="choice-card" onclick="saveStage0BettingDirection('Redesign MM and GB creation')"><div class="choice-title">Redesign MM and GB creation</div></div>
-      <div class="choice-card" onclick="saveStage0BettingDirection('Completely different betting approach')"><div class="choice-title">Completely different betting approach</div></div>
     </div>
   `;
 }
@@ -74,15 +55,15 @@ function showStage0PresidencyRating() {
   document.getElementById("content").innerHTML = `
     <div class="stage">STAGE 0 - CURRENT SYSTEM REVIEW (3/4)</div>
     <div class="question">The Presidency Model</div>
-    <div class="explain">IQ2GQ has trialled five distinct structural iterations of the Presidency framework (evolving metrics from simple accuracy targets up to sophisticated historical value multipliers) before settling on the current comprehensive weighted points system.<br><br><strong>Overall, how well has the current Presidency model worked?</strong></div>
+    <div class="explain">We have had five models to choose our President. The current model uses a weighted points system.<br><br><strong>Overall, does our current Presidency model still suit our needs?</strong></div>
     <div class="choice-grid">
-      <div class="choice-card" onclick="saveStage0PresidencyRating('1 - Complete redesign')"><div class="choice-title">1</div><div class="choice-text">Complete redesign</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyRating('2 - Major improvements')"><div class="choice-title">2</div><div class="choice-text">Major improvements</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyRating('3 - Several improvements')"><div class="choice-title">3</div><div class="choice-text">Several improvements</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyRating('1 - Complete removal (don't need a President)')"><div class="choice-title">1</div><div class="choice-text">Complete redesign</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyRating('2 - Major improvements (e.g. election or roster)')"><div class="choice-title">2</div><div class="choice-text">Major improvements</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyRating('3 - Several improvements (e.g best ROI)')"><div class="choice-title">3</div><div class="choice-text">Several improvements</div></div>
       <div class="choice-card" onclick="saveStage0PresidencyRating('4 - Adequate')"><div class="choice-title">4</div><div class="choice-text">Adequate</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyRating('5 - Mostly successful')"><div class="choice-title">5</div><div class="choice-text">Mostly successful</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyRating('6 - Very successful')"><div class="choice-title">6</div><div class="choice-text">Very successful</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyRating('7 - Keep the core model')"><div class="choice-title">7</div><div class="choice-text">Keep the core model</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyRating('5 - Mostly suits')"><div class="choice-title">5</div><div class="choice-text">Mostly successful</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyRating('6 - Keep core model as is')"><div class="choice-title">6</div><div class="choice-text">Very successful</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyRating('7 - Keep model and Give more power to President')"><div class="choice-title">7</div><div class="choice-text">Keep the core model</div></div>
     </div>
   `;
 }
@@ -96,15 +77,14 @@ function showStage0PresidencyDirection() {
   document.getElementById("content").innerHTML = `
     <div class="stage">STAGE 0 - CURRENT SYSTEM REVIEW (4/4)</div>
     <div class="question">Preferred Presidency Features</div>
-    <div class="explain">Which features of the Presidency model would you most like to see retained or incorporated into the future?</div>
+    <div class="explain">Which features of a Presidency model would you most like to see retained or incorporated into the future?</div>
     <div class="choice-grid">
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep current model')"><div class="choice-title">Keep current model</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep Finals Series but improve scoring')"><div class="choice-title">Keep Finals Series but improve scoring</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep scoring but remove Finals Series')"><div class="choice-title">Keep scoring but remove Finals Series</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Time for a completely new Presidency model')"><div class="choice-title">Time for a completely new Presidency model</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Butlers retained')"><div class="choice-title">Butlers retained</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Butlers adapted')"><div class="choice-title">Butlers adapted</div></div>
-      <div class="choice-card" onclick="saveStage0PresidencyDirection('Butlers removed')"><div class="choice-title">Butlers removed</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep regular season')"><div class="choice-title">Keep current model</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep Finals Series')"><div class="choice-title">Keep Finals Series but improve scoring</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep weighted points')"><div class="choice-title">Keep scoring but remove Finals Series</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('New Model needed')"><div class="choice-title">Time for a completely new Presidency model</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('Keep/Adapt role of Butlers')"><div class="choice-title">Butlers retained</div></div>
+      <div class="choice-card" onclick="saveStage0PresidencyDirection('Remove Butlers')"><div class="choice-title">Butlers adapted</div></div>
     </div>
   `;
 }
